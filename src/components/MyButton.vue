@@ -1,6 +1,6 @@
 <template>
     <div>
-        <slot name="append" />
+        <slot name="append" v-bind="{counter, helloFun}"/>
         <button @click="onClick"><slot>Clicked</slot>{{ counter }}</button>
     </div>
 </template>
@@ -9,14 +9,19 @@
     export default {
         name: "MyButton",
         props: {
-            msg: String
+            msg: String,
+            text: String
         },
         data(){
             return {
                 counter: 0,
+                cnt: 5
             }
         },
         methods: {
+            helloFun(txt){
+                return `im fun ${txt}`;
+            },
             onClick(){
                 this.counter++;
             },
