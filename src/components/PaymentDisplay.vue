@@ -10,7 +10,10 @@
     export default {
         name: "PaymentDisplay",
         props: {
-            list: []
+            list: {
+                type: Array,
+                default: () => []
+            }
         },
     }
 </script>

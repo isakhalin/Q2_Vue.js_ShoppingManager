@@ -5,9 +5,10 @@
         My Personal Coasts
       </header>
       <main>
-        <PaymentDisplay :list="paymentsList">
-
-        </PaymentDisplay>
+<!--        <video width="560" height="315" src="https://www.youtube.com/embed/5-JtB8lU8t8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></video>-->
+<!--        <video src="https://www.youtube.com/embed/5-JtB8lU8t8" ref="player" />-->
+        <AddPaymentForm @addNewPayment="addData" ref="addpaymentForms"></AddPaymentForm>
+        <PaymentDisplay :list="paymentsList"> </PaymentDisplay>
       </main>
     </div>
 
@@ -33,15 +34,13 @@
 
 <script>
   import PaymentDisplay from "@/components/PaymentDisplay.vue";
-// import HelloWorld from './components/HelloWorld.vue'
-// import MyButton from "./components/MyButton.vue";
+  import AddPaymentForm from "@/components/AddPaymentForm.vue";
 
 export default {
   name: 'App',
   components: {
-    PaymentDisplay
-    // HelloWorld,
-    // MyButton
+    PaymentDisplay,
+    AddPaymentForm
   },
   data(){
     return {
@@ -53,29 +52,32 @@ export default {
     fetchData() {
       return [
         {
-          id: '1',
           date: '28.03.2020',
           category: 'Food',
           value: 169
         },
         {
-          id: '2',
           date: '24.03.2020',
           category: 'Transport',
           value: 360
         },
         {
-          id: '3',
           date: '24.03.2020',
           category: 'Cafe',
           value: 532
         }
       ]
     },
+    addData(data){
+      this.paymentsList.push(data);
+    }
   },
   created() {
     this.paymentsList = this.fetchData();
     console.log(this.paymentsList);
+  },
+  mounted() {
+    console.log(this.$refs.addpaymentForm);
   }
 }
 </script>
