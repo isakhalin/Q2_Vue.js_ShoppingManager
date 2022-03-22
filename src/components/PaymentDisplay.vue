@@ -1,12 +1,12 @@
 <template>
-    <div class="list">
-        <div class="item" v-for="item in list" :key="item.id">
-            <span class="item-el">#{{ list.indexOf(item) + 1 }}</span>
-            <span class="item-el">{{ item.date }}</span>
-            <span class="item-el">{{ item.category }}</span>
-            <span class="item-el">{{ item.value }}р.</span>
-        </div>
-    </div>
+    <table class="list">
+        <tr class="item" v-for="item in list" :key="item.id">
+            <td><span class="item-el">#{{ list.indexOf(item) + 1 }}</span></td>
+            <td><span class="item-el">{{ item.date }}</span></td>
+            <td><span class="item-el">{{ item.category }}</span></td>
+            <td><span class="item-el">{{ item.value }}р.</span></td>
+        </tr>
+    </table>
 </template>
 
 <script>
@@ -23,15 +23,14 @@
 
 <style scoped>
     .list {
-        text-align: start;
-        margin: 0 0 0 100px;
+        margin: 20px auto;
     }
 
     .item {
-        margin: 10px 0 0 0;
+        /*margin: 30px 0 0 0;*/
     }
 
     .item-el {
-        margin: 0 50px 0 0;
+        margin: 0 100px 0 0;
     }
 </style>
