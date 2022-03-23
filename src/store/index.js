@@ -5,10 +5,14 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+      paymentList: []
   },
   getters: {
   },
   mutations: {
+    setPaymentListData(state, payload){
+
+    }
   },
   actions: {
   },
