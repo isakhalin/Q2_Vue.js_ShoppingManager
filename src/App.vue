@@ -1,8 +1,9 @@
-    <template>
+<template>
     <div id="app">
         <div :class="wrapper">
             <header>
-                My Personal Coasts
+                <div class="title">My Personal Coasts</div>
+                <div>My total coast {{ getFPV }}</div>
             </header>
             <main>
                 <!--        <video width="560" height="315" src="https://www.youtube.com/embed/5-JtB8lU8t8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></video>-->
@@ -11,6 +12,7 @@
                 <AddPaymentForm @addNewPayment="addData" ref="addpaymentForms"
                                 v-if="showPaymentForm"></AddPaymentForm>
                 <PaymentDisplay :list="paymentsList"></PaymentDisplay>
+                <div>Всего потрачено: {{ getFPV }}р.</div>
             </main>
         </div>
 
@@ -37,6 +39,7 @@
 <script>
     import PaymentDisplay from "@/components/PaymentDisplay.vue";
     import AddPaymentForm from "@/components/AddPaymentForm.vue";
+    import {mapMutations, mapGetters} from "vuex";
 
     export default {
         name: 'App',
@@ -47,40 +50,73 @@
         data() {
             return {
                 //show: false,
-                paymentsList: [],
                 showPaymentForm: false
             }
         },
-        methods: {
-            fetchData() {
-                return [
-                    {
-                        date: '28.03.2020',
-                        category: 'Food',
-                        value: 169
-                    },
-                    {
-                        date: '24.03.2020',
-                        category: 'Transport',
-                        value: 360
-                    },
-                    {
-                        date: '24.03.2020',
-                        category: 'Cafe',
-                        value: 532
-                    }
-                ]
+        computed: {
+            ...mapGetters([
+                "getPaymentsList",
+                "getFullPaymentValue"
+            ]),
+            getFPV() {
+                return this.getFullPaymentValue;
+                //return this.$store.getters.getFullPaymentValue
             },
+            paymentsList() {
+                return this.getPaymentsList;
+                //return this.$store.getters.getPaymentsList
+            }
+        },
+        // actions: { //импортируем экшены из store
+        //     ...mapActions([
+        //         'fetchData',
+        //         'fetchCategoryList'
+        //     ])
+        // },
+        methods: {
+            ...mapMutations([
+                "setPaymentListData",
+                "addDataPayment"
+            ]),
+            // fetchData() {
+            //     return [
+            //         {
+            //             date: '28.03.2020',
+            //             category: 'Food',
+            //             value: 169
+            //         },
+            //         {
+            //             date: '24.03.2020',
+            //             category: 'Transport',
+            //             value: 360
+            //         },
+            //         {
+            //             date: '24.03.2020',
+            //             category: 'Cafe',
+            //             value: 532
+            //         }
+            //     ]
+            // },
             addData(data) {
-                this.paymentsList.push(data);
+                //this.$store.commit('addDataPayment', data); //Нативно
+                this.addDataPayment(data);              //Через импорт мутаций
+                //this.paymentsList.push(data);
             }
         },
         created() {
-            this.paymentsList = this.fetchData();
-            console.log(this.paymentsList);
+            this.setPaymentListData(this.fetchData());
+            //this.$store.commit('setPaymentListData', this.fetchData()); //Global State
+            //this.paymentsList = this.fetchData();
+            //console.log(this.paymentsList);
+            //this.$store.dispatch('fetchData');   //dispatch вызывает экшены из store vuex
+            //this.$store.dispatch('fetchCategoryList');
+
         },
         mounted() {
-            console.log(this.$refs.addpaymentForm);
+            //if (!this.paymentsList?.length) {
+            this.$store.dispatch('fetchData');
+            //}
+            //console.log(this.$refs.addpaymentForm);
         }
     }
 </script>
