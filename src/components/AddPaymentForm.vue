@@ -1,7 +1,12 @@
 <template>
     <div>
         <input class="input" placeholder="Количество" v-model="value" type="number">
-        <input class="input" placeholder="Тип покупки" v-model="category">
+        <div class="categorylist" v-if="categoryList.length">
+            <select v-model="category">
+                <option v-for="(option, idx) in categoryList" :key="idx" :value="option">{{ option }}</option>
+            </select>
+        </div>
+        <!--        <input class="input" placeholder="Тип покупки" v-model="category">-->
         <input class="input" placeholder="Дата" v-model="date">
         <button @click="addToList()">Save</button>
     </div>
@@ -29,6 +34,9 @@
                 }
                 const y = today.getFullYear();
                 return `${d}.${m}.${y}`
+            },
+            categoryList() {
+                return this.$store.getters.getCategoryList
             }
         },
         methods: {
@@ -39,6 +47,11 @@
                     date: this.date || this.getCurrentDate
                 };
                 this.$emit('addNewPayment', data);
+            }
+        },
+        mounted() {
+            if (!this.categoryList.length) {
+                this.$store.dispatch('fetchCategoryList');
             }
         }
     }

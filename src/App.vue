@@ -11,7 +11,8 @@
                 <button @click="showPaymentForm=!showPaymentForm">Добавить покупку</button>
                 <AddPaymentForm @addNewPayment="addData" ref="addpaymentForms"
                                 v-if="showPaymentForm"></AddPaymentForm>
-                <PaymentDisplay :list="paymentsList"></PaymentDisplay>
+                <PaymentDisplay :list="currentElements"></PaymentDisplay>
+                <MyPagination :length="paymentsList.length" :n="n" :cur="cur" @changePage="onChangePage"/>
                 <div>Всего потрачено: {{ getFPV }}р.</div>
             </main>
         </div>
@@ -39,18 +40,22 @@
 <script>
     import PaymentDisplay from "@/components/PaymentDisplay.vue";
     import AddPaymentForm from "@/components/AddPaymentForm.vue";
+    import MyPagination from "@/components/MyPagination.vue";
     import {mapMutations, mapGetters} from "vuex";
 
     export default {
         name: 'App',
         components: {
+            MyPagination,
             PaymentDisplay,
             AddPaymentForm
         },
         data() {
             return {
                 //show: false,
-                showPaymentForm: false
+                showPaymentForm: false,
+                n: 5,
+                cur: 1
             }
         },
         computed: {
@@ -65,6 +70,11 @@
             paymentsList() {
                 return this.getPaymentsList;
                 //return this.$store.getters.getPaymentsList
+            },
+            currentElements(){
+                return this.paymentsList.slice(this.n * (this.cur - 1), this.n + (this.cur - 1) * this.n);
+                //return this.paymentsList.slice(0, 5);
+
             }
         },
         // actions: { //импортируем экшены из store
@@ -101,6 +111,9 @@
                 //this.$store.commit('addDataPayment', data); //Нативно
                 this.addDataPayment(data);              //Через импорт мутаций
                 //this.paymentsList.push(data);
+            },
+            onChangePage(page){
+                this.cur = page;
             }
         },
         created() {

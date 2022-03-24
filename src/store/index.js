@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {    //state это аналог data, как в компоненте
-        paymentList: []   //Инициализация массива
+        paymentList: [],   //Инициализация массива
+        categoryList: []
     },
     getters: {
         getPaymentsList: state => state.paymentList,
@@ -14,6 +15,9 @@ export default new Vuex.Store({
             //res это результирующее значение (сумма предыдущих значение)
             //cur это текущий элемент
             //0 это значение для res по умолчанию, если res пустой.
+        },
+        getCategoryList: state => {
+            return state.categoryList
         }
     },
     mutations: {
@@ -28,6 +32,9 @@ export default new Vuex.Store({
             // 2 это индекс элемента в массиве paymentList, который мы перезаписываем
             // payload это вставляемое значение, которое принимается на вход.
             state.paymentList.push(payload);
+        },
+        addCategoryList(state, categoryLoad) {
+            state.categoryList = categoryLoad;
         }
     },
     actions: {
@@ -56,8 +63,16 @@ export default new Vuex.Store({
         //     commit('setPaymentListData', res.paymentList);
         //     commit('setCategoryListData', res.category);
         // },
-        fetchCategoryList(context) {
-            console.log(context);
+        fetchCategoryList({commit}) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(['Food', 'Sport', 'Education', 'Auto', 'Health'])
+                }, 1000);
+            }).then(res => {
+                commit('addCategoryList', res);
+            });
+
+            //console.log(context);
         }
     },
     modules: {}
