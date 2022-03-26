@@ -135,7 +135,7 @@
             //if (!this.paymentsList?.length) {
             this.$store.dispatch('fetchData');
             //}
-            //console.log(this.$refs.addpaymentForm);
+            ////console.log(this.$refs.addpaymentForm);
         }
     }
 </script>
