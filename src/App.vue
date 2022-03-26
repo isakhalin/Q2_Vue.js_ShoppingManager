@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <div :class="wrapper">
+        <div class="wrapper">
             <header>
                 <div class="title">My Personal Coasts</div>
                 <div>My total coast {{ getFPV }}</div>
@@ -12,7 +12,7 @@
                 <AddPaymentForm @addNewPayment="addData" ref="addpaymentForms"
                                 v-if="showPaymentForm"></AddPaymentForm>
                 <PaymentDisplay :list="currentElements"></PaymentDisplay>
-                <MyPagination :length="paymentsList.length" :n="n" :cur="cur" @changePage="onChangePage"/>
+                <MyPagination :length="paymentsList.length" :n="displayedItems" @changePage="onChangePage"/>
                 <div>Всего потрачено: {{ getFPV }}р.</div>
             </main>
         </div>
@@ -54,8 +54,7 @@
             return {
                 //show: false,
                 showPaymentForm: false,
-                n: 5,
-                cur: 1
+                displayedItems: 3
             }
         },
         computed: {
@@ -71,9 +70,17 @@
                 return this.getPaymentsList;
                 //return this.$store.getters.getPaymentsList
             },
-            currentElements(){
-                return this.paymentsList.slice(this.n * (this.cur - 1), this.n + (this.cur - 1) * this.n);
+            currentElements() {
+                console.log('Начало метода currentElements');
+                //console.log('Это [`page${this.$store.state.curPage}`]');
+                //console.log(`page${this.$store.state.curPage}`);
+                //const aer = this.$store.state.paymentsList.page2;
+                //console.log(aer);
+                //return this.paymentsList[`page${this.$store.state.curPage}`];
+                //return this.paymentsList.page1;
+                return this.paymentsList.slice(this.displayedItems * (this.$store.state.curPage - 1), this.displayedItems + (this.$store.state.curPage - 1) * this.displayedItems);
                 //return this.paymentsList.slice(0, 5);
+                //return this.paymentsList;
 
             }
         },
@@ -112,18 +119,17 @@
                 this.addDataPayment(data);              //Через импорт мутаций
                 //this.paymentsList.push(data);
             },
-            onChangePage(page){
-                this.cur = page;
+            onChangePage(page) {
+                this.$store.state.curPage = page;
             }
         },
         created() {
-            this.setPaymentListData(this.fetchData());
+            //this.setPaymentListData(this.fetchData());
             //this.$store.commit('setPaymentListData', this.fetchData()); //Global State
             //this.paymentsList = this.fetchData();
             //console.log(this.paymentsList);
             //this.$store.dispatch('fetchData');   //dispatch вызывает экшены из store vuex
             //this.$store.dispatch('fetchCategoryList');
-
         },
         mounted() {
             //if (!this.paymentsList?.length) {
@@ -144,8 +150,8 @@
         margin-top: 60px;
     }
 
-    /*.wrapper {*/
-    /*}*/
+    .wrapper {
+    }
     .title {
         font-size: 30px;
     }

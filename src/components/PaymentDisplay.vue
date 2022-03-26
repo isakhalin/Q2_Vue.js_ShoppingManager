@@ -1,7 +1,7 @@
 <template>
     <table class="list">
         <tr class="item" v-for="item in list" :key="item.id">
-            <td><span class="item-el">#{{ list.indexOf(item) + 1 }}</span></td>
+<!--            <td><span class="item-el">#{{ list.indexOf(item) + 1 }}</span></td>-->
             <td><span class="item-el">{{ item.id }}</span></td>
             <td><span class="item-el">{{ item.date }}</span></td>
             <td><span class="item-el">{{ item.category }}</span></td>

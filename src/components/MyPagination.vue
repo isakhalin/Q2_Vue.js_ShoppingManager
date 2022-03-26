@@ -1,10 +1,10 @@
 <template>
     <div :class="[$style.wrp]">
-        <div @click="onClick(cur - 1)">-</div>
-        <div :class="{[$style.active]: cur === i}" v-for="i in amount" :key="i" @click="onClick(i)">
+        <div @click="onClick($store.state.curPage - 1)">-</div>
+        <div :class="{[$style.active]: $store.state.curPage === i}" v-for="i in amount" :key="i" @click="onClick(i)">
             {{ i }}
         </div>
-        <div @click="onClick(cur + 1)">+</div>
+        <div @click="onClick($store.state.curPage + 1)">+</div>
     </div>
 </template>
 
@@ -13,15 +13,15 @@
         name: "MyPagination",
         props: {
             length: Number,
-            n: Number,
-            cur: Number
+            n: Number
         },
         data() {
             return {}
         },
         computed: {
             amount() {
-                return Math.ceil(this.length / this.n); //Длинна всех элементов (50шт) деленная
+                return this.$store.state.allpages;
+                //return Math.ceil(this.length / this.n); //Длинна всех элементов (50шт) деленная
             }                                             //на кол-во отображаемых эл-тов
         },
         methods: {
