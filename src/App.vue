@@ -2,43 +2,24 @@
     <div id="app">
         <nav>
             <a href="#dasboard">Dashboard</a>
-            <a href="#about">Dashboard</a>
-            <a href="#unknown">dev/null</a>
+            <a href="#about">About</a>
+            <a href="#404">404</a>
         </nav>
-        <div class="wrapper">
-            <header>
-                <p class="title">My personal coast</p>
-                <div>My total {{ getFPV }}</div>
-            </header>
-            <main>
-                <AddPayment
-                        @addNewPayment="addData"
-                        :next-id="(this.getAllPages * 3)+1"
-                />
-                <PaymentsDisplay :list="currentElements"/>
-                <my-pagination
-                        :allPages="getAllPages"
-                        :testLength="additionPaymentList.length"
-                        :curPage="curPage"
-                        :elDisplay="elDisplay"
-                        @changePage="onChangePage"
-                />
-            </main>
-        </div>
+        <main>
+
+        </main>
     </div>
 </template>
 
 <script>
-    import AddPayment from "./components/AddPayment.vue";
-    import MyPagination from "./components/MyPagination.vue";
-    import PaymentsDisplay from "./components/PaymentDisplay.vue";
+    //import Dashboard from "@/components/Dashboard.vue";
 
     export default {
         name: "App",
         components: {
-            PaymentsDisplay,
-            AddPayment,
-            MyPagination,
+            // PaymentsDisplay,
+            // AddPayment,
+            // MyPagination,
         },
         data() {
             return {
@@ -46,44 +27,7 @@
                 elDisplay: 3,
                 curPage: 1,
             };
-        },
-        computed: {
-            getAllPages() {
-                return this.$store.getters.getAllPages;
-            },
-            getFPV() {
-                return this.$store.getters.getFullPaymentValue;
-            },
-            additionPaymentList() {
-                return this.$store.getters.getAdditionPaymentList
-            },
-            additionCurrentElements() {
-                return this.additionPaymentList.slice(
-                    this.elDisplay * ((this.curPage - this.getAllPages) - 1),
-                    this.elDisplay * ((this.curPage - this.getAllPages) - 1) + this.elDisplay
-                );
-            },
-            currentElements() {
-                if (this.curPage <= this.getAllPages) {
-                    return this.$store.getters.getCurrentElements;
-                } else {
-                    return this.additionCurrentElements;
-                }
-            },
-        },
-        methods: {
-            onChangePage(page) {
-                this.curPage = page;
-                this.$store.dispatch("fetchDataGit", page);
-            },
-            addData(data) {
-                this.$store.commit('addAdditionPayment', data)
-            },
-        },
-        created() {
-            this.$store.dispatch("fetchCategoryList");
-            this.$store.dispatch("fetchDataGit", this.curPage);
-        },
+        }
     };
 </script>
 
