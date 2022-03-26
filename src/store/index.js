@@ -68,7 +68,7 @@ export default new Vuex.Store({
         .then(data => {
           let total = 0;
           for (let elem in data) {
-            data[elem].forEach(el => total +=Number(el.value))
+            data[elem].forEach(el => total += Number(el.value))
           }
           commit('getDataCacheCoast', total)
           const tempDataArr = data[`page${page}`]
