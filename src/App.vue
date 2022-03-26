@@ -117,7 +117,7 @@
             }
         },
         created() {
-            this.setPaymentListData(this.fetchData());
+            //this.setPaymentListData(this.fetchData());
             //this.$store.commit('setPaymentListData', this.fetchData()); //Global State
             //this.paymentsList = this.fetchData();
             //console.log(this.paymentsList);
