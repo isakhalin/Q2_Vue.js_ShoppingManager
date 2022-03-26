@@ -1,5 +1,10 @@
 <template>
     <div id="app">
+        <nav>
+            <a href="#dasboard">Dashboard</a>
+            <a href="#about">Dashboard</a>
+            <a href="#unknown">dev/null</a>
+        </nav>
         <div class="wrapper">
             <header>
                 <p class="title">My personal coast</p>
