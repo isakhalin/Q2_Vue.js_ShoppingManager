@@ -13,6 +13,7 @@ export default new Vuex.Store({
     dataCacheCoast: 0,
   },
   getters: {
+    getAllPayments: state => (state.allpages * 3) + state.additionPaymentList.length,
     getAllPages: state => state.allpages,
     getAdditionPaymentList: state => state.additionPaymentList,
     // getPaymentList: state => state.paymentList,

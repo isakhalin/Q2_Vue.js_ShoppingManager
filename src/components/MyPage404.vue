@@ -1,0 +1,19 @@
+<template>
+    <div>404</div>
+</template>
+
+<script>
+    export default {
+        name: "MyPage404",
+        data() {
+            return {}
+        },
+        methods: {
+
+        }
+    }
+</script>
+
+<style scoped>
+
+</style>

@@ -7,7 +7,7 @@
         <main>
             <AddPayment
                     @addNewPayment="addData"
-                    :next-id="(this.getAllPages * 3)+1"
+                    :next-id="getAllPayments+1"
             />
             <PaymentsDisplay :list="currentElements"/>
             <my-pagination
@@ -22,25 +22,28 @@
 </template>
 
 <script>
-    import AddPayment from "./components/AddPayment.vue";
-    import MyPagination from "./components/MyPagination.vue";
-    import PaymentsDisplay from "./components/PaymentDisplay.vue";
+    import MyPagination from "@/components/MyPagination.vue";
+    import AddPayment from "@/components/AddPayment.vue";
+    import PaymentsDisplay from "@/components/PaymentDisplay.vue";
 
     export default {
-        name: "Dashboard",
+        name: "MyDashboard",
         components: {
             PaymentsDisplay,
             AddPayment,
-            MyPagination,
+            MyPagination
         },
         data() {
             return {
-                nextId: 4,
+                //nextId: 4,
                 elDisplay: 3,
                 curPage: 1,
             };
         },
         computed: {
+            getAllPayments(){
+              return this.$store.getters.getAllPayments;
+            },
             getAllPages() {
                 return this.$store.getters.getAllPages;
             },

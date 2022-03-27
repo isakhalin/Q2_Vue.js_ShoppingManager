@@ -1,32 +1,56 @@
 <template>
     <div id="app">
         <nav>
-            <a href="#dasboard">Dashboard</a>
-            <a href="#about">About</a>
-            <a href="#404">404</a>
+            <a href="dashboard">Dashboard</a> /
+            <a href="about">About</a> /
+            <a href="404">404</a>
         </nav>
         <main>
-
+            <MyDashboard v-if="page === 'dashboard'"/>
+            <MyPage404 v-if="page === '404'"/>
+            <MyAbout v-if="page === 'about'"/>
         </main>
     </div>
 </template>
 
 <script>
-    //import Dashboard from "@/components/Dashboard.vue";
+    import MyPage404 from "@/components/MyPage404.vue";
+    import MyAbout from "@/components/MyAbout.vue";
+    import MyDashboard from "@/components/MyDashboard";
 
     export default {
         name: "App",
         components: {
-            // PaymentsDisplay,
-            // AddPayment,
-            // MyPagination,
+            MyAbout,
+            MyPage404,
+            MyDashboard
         },
         data() {
             return {
-                nextId: 4,
-                elDisplay: 3,
-                curPage: 1,
+                page: ''
             };
+        },
+        methods: {
+            setPage() {
+                this.page = location.pathname.slice(1);
+            }
+            // onClick(arg) {
+            //     this.page = arg;
+            // }
+        },
+        mounted() {
+            this.setPage();
+            //window.addEventListener('hashchange', () => this.setPage());
+            const links = document.querySelectorAll("a");
+            links.forEach(link => {
+                link.addEventListener('click', event => {
+                    event.preventDefault();
+                    history.pushState({}, '', link.href);
+                    this.setPage();
+                });
+            });
+            //window.addEventListener('popstate', () => this.setPage());
+            window.addEventListener('popstate', this.setPage);
         }
     };
 </script>
