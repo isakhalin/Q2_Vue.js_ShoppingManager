@@ -25,6 +25,7 @@
     import MyPagination from "@/components/MyPagination.vue";
     import AddPayment from "@/components/AddPayment.vue";
     import PaymentsDisplay from "@/components/PaymentDisplay.vue";
+    //import QuickPayments from "@/components/QuickPayments.vue";
 
     export default {
         name: "DashboardView",

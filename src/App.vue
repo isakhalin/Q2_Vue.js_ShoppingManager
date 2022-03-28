@@ -23,13 +23,16 @@
         computed: {},
         methods: {
             goToPageAbout() {
+                let coast = 500;
+            //addStaticPayment(item, price)
                 this.$router.push({
                     name: 'about',
                     params: {
-                        isTrial: 0,
+                        value: coast
                     },
                     query: {
-                        isTrial: true
+                        //isTrial: true,
+                        value: coast
                     }
                 });
             }
