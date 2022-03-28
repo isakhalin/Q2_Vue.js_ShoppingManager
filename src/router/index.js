@@ -14,8 +14,8 @@ const routes = [
         children: [
             {
                 path: 'add/payment/',
-                name: 'add/payment',
-                component: AddPayment
+                name: 'addpayment',
+                component: AddPayment,
             }
         ]
     },
@@ -23,22 +23,15 @@ const routes = [
         path: '/dashboard/',
         name: 'dashboard',
         component: DashboardView,
-        children: [
-            {
-                path: 'home',
-                name: 'home',
-                component: HomeView
-            }
-        ]
     },
-    {
-        path: '/dashboard/:page',
-        name: 'dashboard',
-        component: DashboardView,
-        meta: {
-            title: ''
-        }
-    },
+    // {
+    //     path: '/dashboard/:page',
+    //     name: 'dashboard',
+    //     component: DashboardView,
+    //     meta: {
+    //         title: ''
+    //     }
+    // },
     {
         path: '/about*',
         name: 'about',
@@ -84,7 +77,7 @@ const getTitleByRouteName = routeName => {
 }
 
 router.afterEach((to) => {
-document.title = getTitleByRouteName(to.name)
+    document.title = getTitleByRouteName(to.name)
 });
 
 export default router

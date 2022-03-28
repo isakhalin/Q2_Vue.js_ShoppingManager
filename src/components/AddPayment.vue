@@ -28,11 +28,14 @@
                 showForm: false,
                 value: "",
                 category: "",
-                date: "",
+                date: ""
                 //id: this.nextId + 1,
             };
         },
         computed: {
+            getValue() {
+                return this.$route.params.value;
+            },
             getAllPayments() {
                 return this.$store.getters.getAllPayments; //Получаем общее количество покупок
             },
@@ -50,6 +53,9 @@
         },
         methods: {
             onSave() {
+                if (this.getValue()) {
+                    this.value = this.getValue;
+                }
                 const data = {
                     value: this.value,
                     category: this.category,
@@ -67,6 +73,9 @@
                 this.category = this.categoryList[0];
             }
         },
+        updated() {
+            this.value = this.$route.params.value;
+        }
     };
 </script>
 
