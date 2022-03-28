@@ -16,6 +16,7 @@
                     :elDisplay="elDisplay"
                     @changePage="onChangePage"
             />
+            <router-view></router-view>
         </main>
     </div>
 </template>
@@ -63,6 +64,11 @@
                 }
             },
         },
+        watch: {
+            '$router': function (newValue, oldValue) {
+                console.log(newValue, oldValue);
+            }
+        },
         methods: {
             onChangePage(page) {
                 this.curPage = page;
@@ -80,6 +86,10 @@
             this.$store.dispatch("fetchCategoryList");
             this.$store.dispatch("fetchDataGit", this.curPage);
         },
+        async mounted() {
+            await this.$store.dispatch('fetchDataGit');
+            this.curPage = Number(this.$route.params.page);
+        }
     };
 </script>
 
