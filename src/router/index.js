@@ -13,8 +13,8 @@ const routes = [
         component: HomeView,
         children: [
             {
-                path: 'add/payment/',
-                name: 'addpayment',
+                path: '/add/payment/:category',
+                name: 'quickpayment',
                 component: AddPayment,
             }
         ]

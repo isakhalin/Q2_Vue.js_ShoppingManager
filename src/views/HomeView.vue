@@ -1,10 +1,10 @@
 <template>
     <div class="home">This is Home Page
-        <div @click="quickPayment('food', 200)">Food</div>
+        <div @click="quickPayment('Food', 200)">Food</div>
         <div @click="quickPayment('Transport', 50)">Transport</div>
         <div @click="quickPayment('Entertainment', 2000)">Entertainment</div>
 
-        <router-view />
+        <router-view :valueQuickPay="coast"/>
     </div>
 </template>
 
@@ -15,7 +15,9 @@
     export default {
         name: 'HomeView',
         data() {
-            return {}
+            return {
+                coast: ''
+            }
         },
         components: {
             //QuickPayments
@@ -24,21 +26,22 @@
         methods: {
             quickPayment(cat, val) {
                 this.$router.push({
-                    name: 'addpayment',
+                    name: 'quickpayment',
                     params: {
                         value: val,
-                        cate: cat
+                        category: cat
                     },
-                    path: `/add/payment/${cat}`,
                     query: {
                         //isTrial: true,
-                        value: val,
-                        catego: cat
+                        value: val
                     }
                 });
-                console.log(this.$router);
+                //console.log(this.$router);
                 //this.$emit("saveQuickPayment");
             }
+        },
+        updated() {
+            this.coast = this.$route.query.value;
         }
     }
 </script>

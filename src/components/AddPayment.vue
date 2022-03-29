@@ -22,6 +22,7 @@
         name: "AddPayment",
         props: {
             nextId: Number,
+            valueQuickPay: Number
         },
         data() {
             return {
@@ -32,10 +33,12 @@
                 //id: this.nextId + 1,
             };
         },
+        watch: {
+            valueQuickPay: function (newVal) {
+                this.value = newVal;
+            }
+        },
         computed: {
-            getValue() {
-                return this.$route.params.value;
-            },
             getAllPayments() {
                 return this.$store.getters.getAllPayments; //Получаем общее количество покупок
             },
@@ -53,9 +56,6 @@
         },
         methods: {
             onSave() {
-                if (this.getValue()) {
-                    this.value = this.getValue;
-                }
                 const data = {
                     value: this.value,
                     category: this.category,
@@ -68,13 +68,16 @@
             },
         },
         async mounted() {
-            if (!this.categoryList.lenght) {
+            if (!this.categoryList.length) {
                 await this.$store.dispatch("fetchCategoryList");
                 this.category = this.categoryList[0];
             }
+            // if(this.valueQuickPay){
+            //     //console.log(this.valueQuickPay)
+            //     this.new = this.valueQuickPay;
+            // }
         },
         updated() {
-            this.value = this.$route.params.value;
         }
     };
 </script>
