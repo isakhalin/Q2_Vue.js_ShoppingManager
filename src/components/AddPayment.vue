@@ -76,8 +76,6 @@
             //     //console.log(this.valueQuickPay)
             //     this.new = this.valueQuickPay;
             // }
-        },
-        updated() {
         }
     };
 </script>
