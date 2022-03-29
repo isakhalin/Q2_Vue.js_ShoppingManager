@@ -57,7 +57,7 @@ export default new Vuex.Store({
     fetchCategoryList({ commit }) {
       return new Promise((resolve) => {
         setTimeout(() => {
-          resolve(['Food', 'Sport', 'Education', 'Auto', 'Health', 'Family'])
+          resolve(['Food', 'Sport', 'Education', 'Auto', 'Health', 'Family', 'Transport', 'Entertainment'])
         }, 1000)
       }).then(result => {
         commit('addCategoryList', result)

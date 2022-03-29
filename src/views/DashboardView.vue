@@ -78,9 +78,10 @@
                     this.$store.dispatch("fetchDataGit", page);
                 }
             },
-            addData(data) {
-                this.$store.commit('addAdditionPayment', data)
-            },
+            //Перенесено в AddPayment
+            // addData(data) {
+            //     this.$store.commit('addAdditionPayment', data)
+            // },
         },
         created() {
             this.$store.dispatch("fetchCategoryList");
@@ -88,7 +89,7 @@
         },
         async mounted() {
             await this.$store.dispatch('fetchDataGit');
-            this.curPage = Number(this.$route.params.page);
+            //this.curPage = Number(this.$route.params.page);
         }
     };
 </script>

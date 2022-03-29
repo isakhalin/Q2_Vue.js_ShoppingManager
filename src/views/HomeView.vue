@@ -4,7 +4,10 @@
         <div @click="quickPayment('Transport', 50)">Transport</div>
         <div @click="quickPayment('Entertainment', 2000)">Entertainment</div>
 
-        <router-view :valueQuickPay="coast"/>
+        <router-view :valueQuickPay="coast"
+                     :showFromQuick="show"
+                     :categoryFromQuickPay="category"
+                     :blocked="!show"/>
     </div>
 </template>
 
@@ -16,12 +19,14 @@
         name: 'HomeView',
         data() {
             return {
-                coast: ''
+                coast: '',
+                show: true,
+                category: ''
+
             }
         },
         components: {
             //QuickPayments
-            //HelloWorld
         },
         methods: {
             quickPayment(cat, val) {
@@ -36,12 +41,12 @@
                         value: val
                     }
                 });
-                //console.log(this.$router);
                 //this.$emit("saveQuickPayment");
             }
         },
         updated() {
             this.coast = this.$route.query.value;
+            this.category = this.$route.params.category;
         }
     }
 </script>

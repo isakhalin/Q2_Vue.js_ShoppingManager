@@ -38,9 +38,7 @@
             },
         },
         data() {
-            return {
-                //paymetnCounter: 0,
-            }
+            return {}
         },
     };
 </script>
