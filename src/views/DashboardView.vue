@@ -8,7 +8,7 @@
             <!--            <AddPayment-->
             <!--                    @addNewPayment="addData"-->
             <!--            />-->
-            <ModalWindowAddPaymentForm v-if="addFormShow" @close="addFormShow = false" :settings="settings"/>
+            <ModalWindowAddPaymentForm v-if="addFormShow" @close='addFormShow=false' :settings="settings" />
             <PaymentsDisplay :list="currentElements"/>
             <my-pagination
                     :allPages="getAllPages"
@@ -26,7 +26,6 @@
 
 <script>
     import MyPagination from "@/components/MyPagination.vue";
-    //import AddPayment from "@/components/AddPayment.vue";
     import PaymentsDisplay from "@/components/PaymentDisplay.vue";
     import ModalWindowAddPaymentForm from "@/components/ModalWindowAddPaymentForm";
 
@@ -35,17 +34,15 @@
         components: {
             ModalWindowAddPaymentForm,
             PaymentsDisplay,
-            //AddPayment,
             MyPagination
         },
         data() {
             return {
-                //nextId: 4,
                 addFormShow: false,
                 elDisplay: 3,
                 curPage: 1,
                 settings: {
-                    content: 'AddPayment',
+                    content: 'addpayment',
                     title: 'Add new Payment'
 
                 }
@@ -88,11 +85,7 @@
                 } else {
                     this.$store.dispatch("fetchDataGit", page);
                 }
-            },
-            //Перенесено в AddPayment
-            // addData(data) {
-            //     this.$store.commit('addAdditionPayment', data)
-            // },
+            }
         },
         created() {
             this.$store.dispatch("fetchCategoryList");

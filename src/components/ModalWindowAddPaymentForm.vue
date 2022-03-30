@@ -2,11 +2,10 @@
     <div class="wrapper" v-if="settings.content">
         <div class="header">
             {{ settings.title }}
-            Add new payment
         </div>
         <div class="content">
-            <AddPayment v-if="settings.content === 'AddPayment'"/>
-            <MyAuth v-if="settings.content === 'Auth'"/>
+            <AddPayment v-if="settings.content === 'addpayment'"/>
+            <MyAuth v-if="settings.content === 'auth'"/>
         </div>
         <div class="footer">
             <button @click="onCloseClick">
@@ -30,6 +29,7 @@
             settings: Object
         },
         data() {
+            return {}
         },
         watch: {},
         computed: {},

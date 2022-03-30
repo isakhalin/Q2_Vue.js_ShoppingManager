@@ -4,7 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import DashboardView from "@/views/DashboardView"
 import AddPayment from "@/components/AddPayment";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);     //Устанавливаем роутер
 
 const routes = [
     {
