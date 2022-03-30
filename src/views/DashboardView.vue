@@ -5,9 +5,10 @@
             <div>My total {{ getFPV }}</div>
         </header>
         <main>
-            <AddPayment
-                    @addNewPayment="addData"
-            />
+            <!--            <AddPayment-->
+            <!--                    @addNewPayment="addData"-->
+            <!--            />-->
+            <ModalWindowAddPaymentForm v-if="addFormShow" @close="addFormShow = false" :settings="settings"/>
             <PaymentsDisplay :list="currentElements"/>
             <my-pagination
                     :allPages="getAllPages"
@@ -16,28 +17,38 @@
                     :elDisplay="elDisplay"
                     @changePage="onChangePage"
             />
-            <router-view></router-view>
+            <button @click="addFormShow = true">
+                Add New Cost +
+            </button>
         </main>
     </div>
 </template>
 
 <script>
     import MyPagination from "@/components/MyPagination.vue";
-    import AddPayment from "@/components/AddPayment.vue";
+    //import AddPayment from "@/components/AddPayment.vue";
     import PaymentsDisplay from "@/components/PaymentDisplay.vue";
+    import ModalWindowAddPaymentForm from "@/components/ModalWindowAddPaymentForm";
 
     export default {
         name: "DashboardView",
         components: {
+            ModalWindowAddPaymentForm,
             PaymentsDisplay,
-            AddPayment,
+            //AddPayment,
             MyPagination
         },
         data() {
             return {
                 //nextId: 4,
+                addFormShow: false,
                 elDisplay: 3,
                 curPage: 1,
+                settings: {
+                    content: 'AddPayment',
+                    title: 'Add new Payment'
+
+                }
             };
         },
         computed: {
@@ -94,6 +105,6 @@
     };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 </style>
