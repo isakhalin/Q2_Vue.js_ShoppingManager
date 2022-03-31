@@ -1,17 +1,19 @@
 <template>
     <div class="about">
         <h1>This is an about page</h1>
-        <ModalWindowAddPaymentForm v-if="authFormShow" :settings="settings" @close="authFormShow = false"/>
-        <button @click="authFormShow = true">Auth</button>
+<!--        <ModalWindowAddPaymentForm v-if="authFormShow" :settings="settings" @close="authFormShow = false"/>-->
+<!--        <button @click="authFormShow = true">Auth</button>-->
     </div>
 </template>
 
 <script>
-   import ModalWindowAddPaymentForm from "@/components/ModalWindowAddPaymentForm";
+   //import ModalWindowAddPaymentForm from "@/components/ModalWindowAddPaymentForm";
 
     export default {
         name: 'AboutView',
-        components: {ModalWindowAddPaymentForm},
+        components: {
+        //    ModalWindowAddPaymentForm
+        },
         data() {
             return {
                 settings: {
@@ -23,7 +25,10 @@
         },
         watch: {},
         computed: {},
-        methods: {}
+        methods: {},
+        mounted() {
+            this.$modal.show('Auth Form', {title: "Auth", content: "auth"})
+        }
     }
 
 </script>

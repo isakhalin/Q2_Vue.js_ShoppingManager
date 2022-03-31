@@ -35,7 +35,8 @@
         computed: {},
         methods: {
             onCloseClick() {
-                this.$emit('close')
+                this.$modal.hide();
+                // this.$emit('close')
             }
         },
         beforeCreate() {

@@ -11,20 +11,38 @@
         <main>
             <router-view/>
         </main>
+        <ModalWindowAddPaymentForm v-if="modalShow" :settings="settings"/>
     </div>
 </template>
 
 <script>
+    import ModalWindowAddPaymentForm from "@/components/ModalWindowAddPaymentForm";
+
     export default {
         name: 'App',
+        components: {
+            ModalWindowAddPaymentForm
+        },
         data() {
-            return {}
+            return {
+                modalShow: false,
+                settings: {}
+            }
         },
         computed: {},
         methods: {
+            onShow(settings) {
+                console.log(settings)
+                this.modalShow = true;
+                this.settings = settings;
+            },
+            onHide() {
+                this.modalShow = false;
+                this.settings = {};
+            },
             goToPageAbout() {
                 let coast = 500;
-            //addStaticPayment(item, price)
+                //addStaticPayment(item, price)
                 this.$router.push({
                     name: 'about',
                     params: {
@@ -39,6 +57,16 @@
         },
         created() {
             console.log(this.$router);
+        },
+        mounted() {
+            this.$modal.EventBus.$on('show', this.onShow);
+            this.$modal.EventBus.$on('hide', this.onHide);
+            // this.$modal.show();     //Вызываем метод из модуля
+            // this.$modal.hide();
+        },
+        beforeDestroy() {
+            this.$modal.EventBus.$off('show', this.onShow);
+            this.$modal.EventBus.$off('hide', this.onHide);
         }
     }
 </script>

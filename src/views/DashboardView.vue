@@ -8,7 +8,7 @@
             <!--            <AddPayment-->
             <!--                    @addNewPayment="addData"-->
             <!--            />-->
-            <ModalWindowAddPaymentForm v-if="addFormShow" @close='addFormShow=false' :settings="settings" />
+<!--            <ModalWindowAddPaymentForm v-if="addFormShow" @close='addFormShow=false' :settings="settings" />-->
             <PaymentsDisplay :list="currentElements"/>
             <my-pagination
                     :allPages="getAllPages"
@@ -17,7 +17,7 @@
                     :elDisplay="elDisplay"
                     @changePage="onChangePage"
             />
-            <button @click="addFormShow = true">
+            <button @click="addFormOpen">
                 Add New Cost +
             </button>
         </main>
@@ -27,18 +27,18 @@
 <script>
     import MyPagination from "@/components/MyPagination.vue";
     import PaymentsDisplay from "@/components/PaymentDisplay.vue";
-    import ModalWindowAddPaymentForm from "@/components/ModalWindowAddPaymentForm";
+    //import ModalWindowAddPaymentForm from "@/components/ModalWindowAddPaymentForm";
 
     export default {
         name: "DashboardView",
         components: {
-            ModalWindowAddPaymentForm,
+            //ModalWindowAddPaymentForm,
             PaymentsDisplay,
             MyPagination
         },
         data() {
             return {
-                addFormShow: false,
+                //addFormShow: false, //возможно теперь не нужен
                 elDisplay: 3,
                 curPage: 1,
                 settings: {
@@ -85,6 +85,9 @@
                 } else {
                     this.$store.dispatch("fetchDataGit", page);
                 }
+            },
+            addFormOpen(){
+                this.$modal.show('addpayment', this.settings);
             }
         },
         created() {
