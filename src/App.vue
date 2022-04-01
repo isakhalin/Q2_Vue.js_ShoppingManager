@@ -59,7 +59,7 @@
             console.log(this.$router);
         },
         mounted() {
-            this.$modal.EventBus.$on('show', this.onShow);
+            this.$modal.EventBus.$on('show', this.onShow); //Слушаем событие show, и по его наступлению вызываем this.show
             this.$modal.EventBus.$on('hide', this.onHide);
             // this.$modal.show();     //Вызываем метод из модуля
             // this.$modal.hide();

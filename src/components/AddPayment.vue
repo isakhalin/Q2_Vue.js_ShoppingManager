@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="AddPayment">
         <button @click="showForm = !showForm" v-show="btnSaveShow">Add New Cost</button>
         <div v-show="showForm">
             <input placeholder="Value" v-model.lazy="value"/>

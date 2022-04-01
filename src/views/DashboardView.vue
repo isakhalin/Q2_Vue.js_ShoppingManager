@@ -42,7 +42,7 @@
                 elDisplay: 3,
                 curPage: 1,
                 settings: {
-                    content: 'addpayment',
+                    content: 'AddPayment',
                     title: 'Add new Payment'
 
                 }
@@ -86,6 +86,7 @@
                     this.$store.dispatch("fetchDataGit", page);
                 }
             },
+            //Вы зывает метод show из модуля и передает в него аргументы
             addFormOpen(){
                 this.$modal.show('addpayment', this.settings);
             }

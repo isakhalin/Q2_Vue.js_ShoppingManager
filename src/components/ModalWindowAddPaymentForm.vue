@@ -4,8 +4,10 @@
             {{ settings.title }}
         </div>
         <div class="content">
-            <AddPayment v-if="settings.content === 'addpayment'"/>
-            <MyAuth v-if="settings.content === 'auth'"/>
+            <!-- Подставляет компонент, имя которое соответствует тому, что передали в settings.content -->
+            <component :is="settings.content"/>
+            <!--            <AddPayment v-if="settings.content === 'addpayment'"/>-->
+            <!--            <MyAuth v-if="settings.content === 'auth'"/>-->
         </div>
         <div class="footer">
             <button @click="onCloseClick">
