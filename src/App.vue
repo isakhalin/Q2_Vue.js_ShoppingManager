@@ -16,12 +16,13 @@
 </template>
 
 <script>
-    import ModalWindowAddPaymentForm from "@/components/ModalWindowAddPaymentForm";
+    //import ModalWindowAddPaymentForm from "@/components/ModalWindowAddPaymentForm";
 
     export default {
         name: 'App',
         components: {
-            ModalWindowAddPaymentForm
+            //Импортируем компонент, указываем имя chank'а и путь до компонента
+            ModalWindowAddPaymentForm: () => import(/* webpackChunkName: "ModalComp" */ './components/ModalWindowAddPaymentForm.vue')
         },
         data() {
             return {

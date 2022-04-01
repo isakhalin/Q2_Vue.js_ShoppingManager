@@ -18,14 +18,15 @@
 </template>
 
 <script>
-    import AddPayment from "@/components/AddPayment.vue";
-    import MyAuth from "@/components/MyAuth";
+    //import AddPayment from "@/components/AddPayment.vue";
+    //import MyAuth from "@/components/MyAuth";
 
     export default {
         name: "ModalWindowAddPaymentForm",
         components: {
-            MyAuth,
-            AddPayment
+            //Импортируем компонент, указываем имя chank'а и путь до компонента
+            MyAuth: () => import('@/components/MyAuth.vue'),
+            AddPayment: () => import('@/components/AddPayment.vue')
         },
         props: {
             settings: Object

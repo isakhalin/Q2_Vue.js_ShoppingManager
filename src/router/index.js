@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import DashboardView from "@/views/DashboardView"
-import AddPayment from "@/components/AddPayment";
+//import HomeView from '../views/HomeView.vue'
+//import DashboardView from "@/views/DashboardView"
+//import AddPayment from "@/components/AddPayment";
 
 Vue.use(VueRouter);     //Устанавливаем роутер
 
@@ -10,19 +10,19 @@ const routes = [
     {
         path: '/',
         name: 'home',
-        component: HomeView,
+        component: () => import('../views/HomeView.vue'),
         children: [
             {
                 path: '/add/payment/:category',
                 name: 'quickpayment',
-                component: AddPayment,
+                component: () => import('../components/AddPayment.vue')
             }
         ]
     },
     {
         path: '/dashboard/',
         name: 'dashboard',
-        component: DashboardView,
+        component: () => import(/* webpackChunkName: "dashboard" */ '../views/DashboardView.vue'),
     },
     // {
     //     path: '/dashboard/:page',
@@ -42,7 +42,7 @@ const routes = [
     },
     {
         path: '*',
-        component: HomeView
+        component: () => import('../views/HomeView.vue')
     }
 ]
 
