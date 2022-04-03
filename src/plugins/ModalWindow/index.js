@@ -13,19 +13,12 @@ export default {
 
             show(name, settings) {
                 this.EventBus.$emit('show', {name, ...settings})
-                console.log('Show');
             },
 
-            hide(wherecomp) {
-                console.log(`hide${wherecomp}`)
-                this.EventBus.$emit(`hide${wherecomp}`)
-                console.log('Hide from module');
+            hide() {
+                this.EventBus.$emit('hide')
             },
 
-            // hideEditMEnu() {
-            //     this.EventBus.$emit('hideEditMenu')
-            //     console.log('Hide2 from module');
-            // }
         };
     }
 }

@@ -12,7 +12,7 @@
             <router-view/>
         </main>
                 <transition name="fade">
-                    <ModalWindowAddPaymentForm v-if="modalShow" whereIam='App' :settings="settings"/>
+                    <ModalWindowAddPaymentForm v-if="modalShow" :settings="settings"/>
                 </transition>
     </div>
 </template>
@@ -38,12 +38,10 @@
         computed: {},
         methods: {
             onShow(settings) {
-                console.log(settings)
                 this.modalShow = true;
                 this.settings = settings;
             },
             onHide() {
-                console.log('Отработал метод onHide из App')
                 this.modalShow = false;
                 this.settings = {};
             },
@@ -67,7 +65,7 @@
         },
         mounted() {
             this.$modal.EventBus.$on('show', this.onShow); //Слушаем событие show, и по его наступлению вызываем this.onShow
-            this.$modal.EventBus.$on('hideApp', this.onHide);
+            this.$modal.EventBus.$on('hide', this.onHide);
             // this.$modal.show();     //Вызываем метод из модуля
             // this.$modal.hide();
         },
