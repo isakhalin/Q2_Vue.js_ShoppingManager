@@ -3,11 +3,11 @@ import App from './App.vue'
 import store from './store'
 import router from './router'
 import modal from './plugins/ModalWindow'   //Подключаем плагин modal
-//import modalEditMenu from './plugins/ModalEditMenu'
+import modalEditMenu from './plugins/ModalEditMenu'
 
 Vue.config.productionTip = false;
 Vue.use(modal); //Устанавливаем плагин modal
-//Vue.use(modalEditMenu);
+Vue.use(modalEditMenu);
 
 new Vue({
   store,

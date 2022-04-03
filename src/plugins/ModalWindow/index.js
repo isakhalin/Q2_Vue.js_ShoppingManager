@@ -16,10 +16,10 @@ export default {
                 console.log('Show');
             },
 
-            hide(wherecomp) {
-                console.log(`hide${wherecomp}`)
-                this.EventBus.$emit(`hide${wherecomp}`)
-                console.log('Hide from module');
+            hide() {
+                //console.log(`hide`)
+                this.EventBus.$emit(`hide`)
+                //console.log('Hide from module');
             },
 
             // hideEditMEnu() {

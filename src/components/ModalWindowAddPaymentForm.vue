@@ -30,7 +30,7 @@
         },
         props: {
             settings: Object,
-            whereIam: String
+            //whereIam: String
         },
         data() {
             return {}
@@ -39,9 +39,9 @@
         computed: {},
         methods: {
             onCloseClick() {
-                console.log(this.whereIam)
-                this.$modal.hide(this.whereIam);
-                console.log('close clicked from editForm')
+                //console.log(this.whereIam)
+                this.$modal.hide();
+                //console.log('close clicked from editForm')
                 // this.$emit('close')
             }
         },

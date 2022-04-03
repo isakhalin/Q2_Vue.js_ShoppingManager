@@ -24,9 +24,9 @@
                 <td>{{ item.category }}</td>
                 <td>{{ item.value }}</td>
                 <td>
-                    <div class="cont">
-                        <button @click="editFormOpen">...</button>
-                        <ModalEditMenu class="editForm" v-if="modalShow" whereIam="PaymentsDisplay" :settings="settings"/>
+                    <div class="editformwrapper">
+                        <button @click="editMenuOpen">...</button>
+                        <ModalEditMenu class="editForm" v-if="modalShow" :settings="settings"/>
                     </div>
                 </td>
             </tr>
@@ -38,7 +38,7 @@
     export default {
         name: "PaymentsDisplay",
         components: {
-            ModalEditMenu: () => import(/* webpackChunkName: "ModalComp" */ './ModalWindowAddPaymentForm.vue')
+            ModalEditMenu: () => import(/* webpackChunkName: "ModalComp" */ './ModalWindowEditMenu.vue')
             //ModalWindowAddPaymentForm: () => import(/* webpackChunkName: "ModalComp" */ './ModalWindowAddPaymentForm.vue')
         },
         props: {
@@ -49,29 +49,33 @@
         },
         data() {
             return {
-                modalShow: true,
+                modalShow: false,
                 settings: {
-                    content: 'AddPayment',
-                    title: 'Add new Payment'
+                    content: 'Edit Cost',
+                    title: 'Edit Cost'
                 }
             }
         },
         methods: {
-            onHide2() {
+            onShowEditMenu(incomingSettings) {
+                this.modalShow = true;
+                this.settings = incomingSettings;
+            },
+            onHideEditMenu() {
                 this.modalShow = false;
                 console.log('Отработал метод onHide2')
             },
-            editFormOpen(){
-                this.$modal.show('editmenu', this.settings)
+            editMenuOpen() {
+                this.$modalEditMenu.showEditMenu('editmenu', this.settings)
             }
         },
         mounted() {
-            this.$modal.EventBus.$on('show', this.onShow);
-            this.$modal.EventBus.$on('hidePaymentsDisplay', this.onHide2);
+            this.$modalEditMenu.EventBus.$on('showEditMenu', this.onShowEditMenu);
+            this.$modalEditMenu.EventBus.$on('hideEditMenu', this.onHideEditMenu);
         },
         beforeDestroy() {
-            this.$modal.EventBus.$off('show', this.onShow);
-            this.$modal.EventBus.$off('hide', this.onHide);
+            this.$modalEditMenu.EventBus.$off('showEditMenu', this.onShowEditMenu);
+            this.$modalEditMenu.EventBus.$off('hideEditMenu', this.onHideEditMenu);
         }
     };
 </script>
@@ -89,7 +93,7 @@
         padding: 5px 7px;
     }
 
-    .cont {
+    .editformwrapper {
         position: relative;
     }
 </style>
