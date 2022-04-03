@@ -16,9 +16,9 @@ export default {
                 console.log('Show');
             },
 
-            hide(clickedHideFrom) {
-                console.log(`hide${clickedHideFrom}`)
-                this.EventBus.$emit(`hide${clickedHideFrom}`)
+            hide(wherecomp) {
+                console.log(`hide${wherecomp}`)
+                this.EventBus.$emit(`hide${wherecomp}`)
                 console.log('Hide from module');
             },
 
