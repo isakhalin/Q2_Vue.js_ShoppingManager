@@ -23,6 +23,12 @@
                 <td>{{ item.date }}</td>
                 <td>{{ item.category }}</td>
                 <td>{{ item.value }}</td>
+                <td>
+                    <div class="cont">
+                        <button @click="editFormOpen">...</button>
+                        <ModalEditMenu class="editForm" v-if="modalShow" whereIam="PaymentsDisplay" :settings="settings"/>
+                    </div>
+                </td>
             </tr>
         </table>
     </div>
@@ -31,6 +37,10 @@
 <script>
     export default {
         name: "PaymentsDisplay",
+        components: {
+            ModalEditMenu: () => import(/* webpackChunkName: "ModalComp" */ './ModalWindowAddPaymentForm.vue')
+            //ModalWindowAddPaymentForm: () => import(/* webpackChunkName: "ModalComp" */ './ModalWindowAddPaymentForm.vue')
+        },
         props: {
             list: {
                 type: Array,
@@ -38,8 +48,31 @@
             },
         },
         data() {
-            return {}
+            return {
+                modalShow: true,
+                settings: {
+                    content: 'AddPayment',
+                    title: 'Add new Payment'
+                }
+            }
         },
+        methods: {
+            onHide2() {
+                this.modalShow = false;
+                console.log('Отработал метод onHide2')
+            },
+            editFormOpen(){
+                this.$modal.show('editmenu', this.settings)
+            }
+        },
+        mounted() {
+            this.$modal.EventBus.$on('show', this.onShow);
+            this.$modal.EventBus.$on('hidePaymentsDisplay', this.onHide2);
+        },
+        beforeDestroy() {
+            this.$modal.EventBus.$off('show', this.onShow);
+            this.$modal.EventBus.$off('hide', this.onHide);
+        }
     };
 </script>
 
@@ -54,6 +87,9 @@
 
     td {
         padding: 5px 7px;
+    }
 
+    .cont {
+        position: relative;
     }
 </style>

@@ -11,7 +11,9 @@
         <main>
             <router-view/>
         </main>
-        <ModalWindowAddPaymentForm v-if="modalShow" :settings="settings"/>
+                <transition name="fade">
+                    <ModalWindowAddPaymentForm v-if="modalShow" whereIam='App' :settings="settings"/>
+                </transition>
     </div>
 </template>
 
@@ -27,7 +29,10 @@
         data() {
             return {
                 modalShow: false,
-                settings: {}
+                settings: {
+                    // content: 'AddPayment',
+                    // title: 'Add new Payment'
+                }
             }
         },
         computed: {},
@@ -38,6 +43,7 @@
                 this.settings = settings;
             },
             onHide() {
+                console.log('Отработал метод onHide из App')
                 this.modalShow = false;
                 this.settings = {};
             },
@@ -60,8 +66,8 @@
             console.log(this.$router);
         },
         mounted() {
-            this.$modal.EventBus.$on('show', this.onShow); //Слушаем событие show, и по его наступлению вызываем this.show
-            this.$modal.EventBus.$on('hide', this.onHide);
+            this.$modal.EventBus.$on('show', this.onShow); //Слушаем событие show, и по его наступлению вызываем this.onShow
+            this.$modal.EventBus.$on('hideApp', this.onHide);
             // this.$modal.show();     //Вызываем метод из модуля
             // this.$modal.hide();
         },
@@ -73,6 +79,14 @@
 </script>
 
 <style lang="scss">
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s ease;
+    }
+
+    .fade-enter, .fade-leave-to {
+        opacity: 0;
+    }
+
     #app {
         font-family: Avenir, Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;

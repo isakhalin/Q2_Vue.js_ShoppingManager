@@ -16,10 +16,16 @@ export default {
                 console.log('Show');
             },
 
-            hide() {
-                this.EventBus.$emit('hide')
-                console.log('Hide');
-            }
+            hide(clickedHideFrom) {
+                console.log(`hide${clickedHideFrom}`)
+                this.EventBus.$emit(`hide${clickedHideFrom}`)
+                console.log('Hide from module');
+            },
+
+            // hideEditMEnu() {
+            //     this.EventBus.$emit('hideEditMenu')
+            //     console.log('Hide2 from module');
+            // }
         };
     }
 }

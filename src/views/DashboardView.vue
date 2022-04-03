@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <header>
-            <p class="title">My personal coast</p>
+            <p class="title">My personal cost</p>
             <div>My total {{ getFPV }}</div>
         </header>
         <main>

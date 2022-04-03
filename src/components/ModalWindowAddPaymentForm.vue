@@ -29,7 +29,8 @@
             AddPayment: () => import('@/components/AddPayment.vue')
         },
         props: {
-            settings: Object
+            settings: Object,
+            whereIam: String
         },
         data() {
             return {}
@@ -38,7 +39,9 @@
         computed: {},
         methods: {
             onCloseClick() {
-                this.$modal.hide();
+                console.log(this.whereIam)
+                this.$modal.hide(this.whereIam);
+                console.log('close clicked from editForm')
                 // this.$emit('close')
             }
         },
@@ -62,10 +65,15 @@
 </script>
 
 <style scoped>
+
     .wrapper {
         padding: 20px;
         position: absolute;
         top: 20px;
         background: #efefef;
     }
+
+    /*.editForm {*/
+    /*    background: #cccccc;*/
+    /*}*/
 </style>
