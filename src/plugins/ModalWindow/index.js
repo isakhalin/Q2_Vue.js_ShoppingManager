@@ -21,11 +21,6 @@ export default {
                 this.EventBus.$emit(`hide`)
                 //console.log('Hide from module');
             },
-
-            // hideEditMEnu() {
-            //     this.EventBus.$emit('hideEditMenu')
-            //     console.log('Hide2 from module');
-            // }
         };
     }
 }

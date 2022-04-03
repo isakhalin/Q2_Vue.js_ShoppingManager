@@ -1,6 +1,6 @@
 <template>
     <div class="AddPayment">
-        <button @click="showForm = !showForm" v-show="btnSaveShow">Add New Cost</button>
+        <button @click="showForm = !showForm" v-show="btnAddcostShow">Add New Cost</button>
         <div v-show="showForm">
             <input placeholder="Value" v-model.lazy="value"/>
             <div class="categoryList" v-if="categoryList">
@@ -22,10 +22,13 @@
         name: "AddPayment",
         props: {
             //nextId: Number,
-            valueQuickPay: Number,
-            showFromQuick: String,
+            valueAuto: Number,  //Параметр отвечает за автозаполнение поля в инпуте стоимости
+            callFromQuick: String,  //Пропс указывает откуда вызван компонент
+            showBtnSave: Boolean, //Если true, то блокирует кнопку Save
+            showBtnAddcost: Boolean, //Если true, то блокирует кнопку Add Cost
             categoryFromQuickPay: String,
-            blocked: Boolean
+            blocked: Boolean,
+            itemid: Number
         },
         data() {
             return {
@@ -33,13 +36,32 @@
                 value: "",
                 category: "",
                 date: "",
-                btnSaveShow: true
+                btnSaveShow: true,
+                btnAddcostShow: true,
                 //id: this.nextId + 1,
             };
         },
         watch: {
-            valueQuickPay: function (newVal) {
-                this.value = newVal;
+            showBtnSave: function (newValue) {
+                this.btnSaveShow = newValue;
+            },
+            showBtnAddcost: function (newValue) {
+                this.btnAddcostShow = newValue;
+            },
+            deep: true,
+            valueAuto: function (newValue) {
+                this.value = newValue;
+            },
+            idOfItem: function (newValue) { //getAllPages * 3
+                // console.log(`dsdsds ${this.$store.getters.getPaymentList.length}`)
+                if (newValue <= this.$store.getters.getAmountIemsInPaymentList) {
+                    return 'Ищем в кешированном списке'
+                }
+
+                let generalArray = ''
+                console.log(generalArray);
+                console.log(newValue);
+                //this.value = newValue;
             },
             categoryFromQuickPay: function (newValue) {
                 this.category = newValue;
@@ -81,16 +103,23 @@
                 this.$store.commit('addAdditionPayment', data)
             }
         },
+        beforeMount() {
+
+        },
         async mounted() {
             if (!this.categoryList.length) {
                 await this.$store.dispatch("fetchCategoryList");
                 this.category = this.categoryList[0];
             }
             if (this.showFromQuick) {
-                this.showForm = true;
                 this.date = this.getCurrentDate;
-                this.btnSaveShow = this.blocked;
+                this.showForm = true;
+                //this.btnSaveShow = this.blocked;
+                this.btnSaveShow = this.showBtnSave;
+                this.btnAddcostShow = this.showBtnAddcost;
             }
+
+
         },
         updated() {
             if (this.value && this.category && this.date) {

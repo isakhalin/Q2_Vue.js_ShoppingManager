@@ -25,12 +25,16 @@
                 <td>{{ item.value }}</td>
                 <td>
                     <div class="editformwrapper">
-                        <button @click="editMenuOpen">...</button>
-                        <ModalEditMenu class="editForm" v-if="modalShow" :settings="settings"/>
+                        <button v-if="!modalShow" @click="editMenuOpen(item.id)">...</button>
+                        <button v-else @click="modalShow = !modalShow">...</button>
+                        <!--                        <component :is="ModalWindowEditMenu"/>-->
                     </div>
                 </td>
             </tr>
         </table>
+        <transition name="fade">
+                <ModalWindowEditMenu class="editForm" v-if="modalShow" :settings="settings" :IdOfItem="currentItemId"/> <!--:valueAuto="" -->
+        </transition>
     </div>
 </template>
 
@@ -38,7 +42,7 @@
     export default {
         name: "PaymentsDisplay",
         components: {
-            ModalEditMenu: () => import(/* webpackChunkName: "ModalComp" */ './ModalWindowEditMenu.vue')
+            ModalWindowEditMenu: () => import(/* webpackChunkName: "ModalComp" */ './ModalWindowEditMenu.vue')
             //ModalWindowAddPaymentForm: () => import(/* webpackChunkName: "ModalComp" */ './ModalWindowAddPaymentForm.vue')
         },
         props: {
@@ -51,22 +55,25 @@
             return {
                 modalShow: false,
                 settings: {
-                    content: 'Edit Cost',
-                    title: 'Edit Cost'
-                }
+                    content: 'AddPayment', //Имя компонента, которое мы будем передавать
+                    title: 'Edit Cost'      //Заголовок, который мы будем передавать
+                },
+                currentItemId: '' //Значение id текущего выбранного платежа
             }
         },
         methods: {
             onShowEditMenu(incomingSettings) {
                 this.modalShow = true;
-                this.settings = incomingSettings;
+                this.settings = incomingSettings;  //
             },
             onHideEditMenu() {
                 this.modalShow = false;
                 console.log('Отработал метод onHide2')
             },
-            editMenuOpen() {
-                this.$modalEditMenu.showEditMenu('editmenu', this.settings)
+            editMenuOpen(idOfSelectedItem) {
+                this.currentItemId = idOfSelectedItem;
+                console.log(this.currentItemId)
+                this.$modalEditMenu.showEditMenu('editPayment', this.settings)
             }
         },
         mounted() {
@@ -95,5 +102,12 @@
 
     .editformwrapper {
         position: relative;
+    }
+
+    .editForm {
+        padding: 20px;
+        /*position: absolute;*/
+        /*top: 20px;*/
+        background: #efefef;
     }
 </style>

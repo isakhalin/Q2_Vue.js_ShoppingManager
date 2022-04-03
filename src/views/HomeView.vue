@@ -4,10 +4,13 @@
         <div @click="quickPayment('Transport', 50)">Transport</div>
         <div @click="quickPayment('Entertainment', 2000)">Entertainment</div>
 
-        <router-view :valueQuickPay="coast"
-                     :showFromQuick="show"
-                     :categoryFromQuickPay="category"
-                     :blocked="!show"/>
+        <router-view :valueAuto="cost"
+                     callFromQuick="true"
+                     showBtnSave="false"
+                     showBtnAddcost="false"
+                     :categoryFromQuickPay="category"/>
+        <!--         blocked="false" -->
+
     </div>
 </template>
 
@@ -19,10 +22,9 @@
         name: 'HomeView',
         data() {
             return {
-                coast: '',
-                show: true,
-                category: ''
-
+                cost: '',
+                //show: true,
+                category: '',
             }
         },
         components: {
@@ -45,7 +47,7 @@
             }
         },
         updated() {
-            this.coast = this.$route.query.value;
+            this.cost = this.$route.query.value;
             this.category = this.$route.params.category;
         }
     }
