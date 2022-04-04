@@ -4,8 +4,12 @@
         <button class="buttons">Удалить</button>
         <!--        <button class="buttons" @click="closeEditMenu">Закрыть</button>-->
 
-        <component :is="settings.content" v-if="showEditForm" :itemid="IdOfItem" blocked="true"/>
-
+        <component :is="settings.content"
+                   v-if="showEditForm"
+                   :itemid="IdOfItem"
+                   :autoShowInputForm="true"
+                   :showBtnSave="false"
+                   :showBtnAddcost="false"/>
     </div>
 </template>
 

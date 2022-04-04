@@ -6,11 +6,9 @@
 
         <router-view :valueAuto="cost"
                      callFromQuick="true"
-                     showBtnSave="false"
-                     showBtnAddcost="false"
+                     :showBtnSave="false"
+                     :showBtnAddcost="false"
                      :categoryFromQuickPay="category"/>
-        <!--         blocked="false" -->
-
     </div>
 </template>
 

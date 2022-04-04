@@ -22,10 +22,11 @@
         name: "AddPayment",
         props: {
             //nextId: Number,
-            valueAuto: Number,  //Параметр отвечает за автозаполнение поля в инпуте стоимости
+            autoShowInputForm: String, //Пропс отвечает за авто отображение инпутов формы на старте
+            valueAuto: Number,  //Пропс отвечает за автозаполнение поля в инпуте стоимости
             callFromQuick: String,  //Пропс указывает откуда вызван компонент
-            showBtnSave: Boolean, //Если true, то блокирует кнопку Save
-            showBtnAddcost: Boolean, //Если true, то блокирует кнопку Add Cost
+            showBtnSave: String, //Если true, то блокирует кнопку Save
+            showBtnAddcost: String, //Если true, то блокирует кнопку Add Cost
             categoryFromQuickPay: String,
             blocked: Boolean,
             itemid: Number
@@ -42,13 +43,13 @@
             };
         },
         watch: {
-            showBtnSave: function (newValue) {
-                this.btnSaveShow = newValue;
-            },
-            showBtnAddcost: function (newValue) {
-                this.btnAddcostShow = newValue;
-            },
-            deep: true,
+            // showBtnSave: function (newValue) {
+            //     this.btnSaveShow = newValue;
+            // },
+            // showBtnAddcost: function (newValue) {
+            //     this.btnAddcostShow = newValue;
+            // },
+            //deep: true,
             valueAuto: function (newValue) {
                 this.value = newValue;
             },
@@ -111,15 +112,25 @@
                 await this.$store.dispatch("fetchCategoryList");
                 this.category = this.categoryList[0];
             }
-            if (this.showFromQuick) {
+            if (this.callFromQuick) {
                 this.date = this.getCurrentDate;
-                this.showForm = true;
                 //this.btnSaveShow = this.blocked;
+                this.showForm = true;
+            }
+            // if(this.autoShowInputForm){
+            //     this.showForm = this.autoShowInputForm;
+            // }
+            if (this.showBtnSave !== undefined) {
                 this.btnSaveShow = this.showBtnSave;
+            }
+            if(this.showBtnAddcost !== undefined){
                 this.btnAddcostShow = this.showBtnAddcost;
             }
-
-
+            if(this.autoShowInputForm !== undefined){
+                this.showForm = this.autoShowInputForm;
+            }
+            // this.btnSaveShow = this.showBtnSave;
+            // this.btnAddcostShow = this.showBtnAddcost;
         },
         updated() {
             if (this.value && this.category && this.date) {

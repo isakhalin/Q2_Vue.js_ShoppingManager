@@ -12,7 +12,8 @@
             <router-view/>
         </main>
                 <transition name="fade">
-                    <ModalWindowAddPaymentForm v-if="modalShow" :settings="settings"/>
+                    <ModalWindowAddPaymentForm v-if="modalShow"
+                                               :settings="settings" />
                 </transition>
     </div>
 </template>

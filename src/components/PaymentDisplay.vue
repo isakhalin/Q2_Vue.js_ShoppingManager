@@ -33,7 +33,10 @@
             </tr>
         </table>
         <transition name="fade">
-                <ModalWindowEditMenu class="editForm" v-if="modalShow" :settings="settings" :IdOfItem="currentItemId"/> <!--:valueAuto="" -->
+                <ModalWindowEditMenu class="editForm"
+                                     v-if="modalShow"
+                                     :settings="settings"
+                                     :IdOfItem="currentItemId"/> <!--:valueAuto="" -->
         </transition>
     </div>
 </template>
