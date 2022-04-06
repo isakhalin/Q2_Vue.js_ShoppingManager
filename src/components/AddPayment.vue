@@ -43,13 +43,6 @@
             };
         },
         watch: {
-            // showBtnSave: function (newValue) {
-            //     this.btnSaveShow = newValue;
-            // },
-            // showBtnAddcost: function (newValue) {
-            //     this.btnAddcostShow = newValue;
-            // },
-            //deep: true,
             valueAuto: function (newValue) {
                 this.value = newValue;
             },
@@ -107,13 +100,6 @@
                 this.$store.commit('addAdditionPayment', data)
             },
             editData() {
-                //console.log("Запустилась едитдата")
-                //this.$store.commit('editDataPayment', {map: this.$store.getters.getMap, item: this.curItem})
-                //this.$store.getters.getMap.get(this.curItem.id).value =
-                //this.$store.getters.getMap.set(this.curItem.id, this.curItem)
-                // this.$store.getters.getMap.get(this.curItem.id).value = this.value
-                // this.$store.getters.getMap.get(this.curItem.id).category = this.category
-                // this.$store.getters.getMap.get(this.curItem.id).date = this.date
                 let newData = {
                     id: this.curItem.id,
                     value: this.value,
@@ -128,24 +114,7 @@
                 this.value = this.curItem.value;
                 this.category = this.curItem.category;
                 this.date = this.curItem.date;
-                // this.editData(this.curItem)
-                //console.log(this.$store.getters.getMap)
             }
-
-            // if (this.itemId <= this.$store.getters.getAmountIemsInPaymentList) {
-            //     let cache = this.$store.getters.getPaymentList;
-            //     let currentItemWithId = cache.filter(el => { //В currentItemWithId хранится покупка с нужным ID
-            //         return el.id === this.itemId;
-            //     })
-            //     // let eee = currentItemWithId[0]
-            //     // console.log(eee)
-            //     // let eee = ...currentItemWithId.value
-            //     this.value = currentItemWithId[0].value;
-            //     this.category = currentItemWithId[0].category;
-            //     this.date = currentItemWithId[0].date;
-            //     console.log(`Это новый валуе ${this.value}`)
-            //     console.log(`Это новый категори ${this.category}`)
-            // }
         },
         async mounted() {
             if (!this.categoryList.length) {
@@ -154,12 +123,8 @@
             }
             if (this.callFromQuick) {
                 this.date = this.getCurrentDate;
-                //this.btnSaveShow = this.blocked;
                 this.showForm = true;
             }
-            // if(this.autoShowInputForm){
-            //     this.showForm = this.autoShowInputForm;
-            // }
             if (this.showBtnSave !== undefined) {
                 this.btnSaveShow = this.showBtnSave;
             }

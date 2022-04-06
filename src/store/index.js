@@ -5,7 +5,6 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        test: 5,
         paymentList: [],
         additionPaymentList: [],
         categoryList: [],
@@ -16,11 +15,9 @@ export default new Vuex.Store({
     },
     getters: {
         test: state => state.test,
-        //getCurrentPayment: state => {},
         getAllPayments: state => (state.allpages * state.displayedItems) + state.additionPaymentList.length,
         getDisplayedItems: state => state.displayedItems, //Возвращает количество отображаемых платежей на одной странице
         getAmountIemsInPaymentList: state => state.allpages * state.displayedItems, //Общее количество платежей в кешированном списке paymentList
-        //getAmountIemsInAdditionPaymentList: state => state.paymentList.length,
         getAllPages: state => state.allpages,
         getPaymentList: state => state.paymentList,
         getAdditionPaymentList: state => state.additionPaymentList,
@@ -41,12 +38,6 @@ export default new Vuex.Store({
         },
     },
     mutations: {
-        // tyu(){
-        //     // console.log(`TEST ${getters.test}`);
-        //     // console.log(`GET ${this.getters.getMap.get(1)}`);
-        //     // console.log(this.getters.getMap.get(1))
-        //
-        // },
         addAdditionPayment(state, data) {
             state.additionPaymentList.push(data);
         },
@@ -54,31 +45,6 @@ export default new Vuex.Store({
             this.getters.getMap.get(newData.id).value = newData.value;
             this.getters.getMap.get(newData.id).category = newData.category;
             this.getters.getMap.get(newData.id).date = newData.date;
-        //     // console.log(map)
-        //     // console.log(item)
-        //     //dataFromGetMap.get(data.id).set(data);
-        //     //wer.set(data)
-        //     // state
-        //     // console.log(`data.id - ${data.id}`);
-        //     // console.log(getters.getMap)
-        //     //let qwe = getters.getMap
-        //     // console.log(data)
-        //     // qwe.set
-        //     //console.log(`dsagdsagadsg ${qwe[3]}`)
-        //     // if(data.id <= 18){
-        //     //
-        //     //     // let tmp = state.paymentList.filter(el => {
-        //     //     //     return state.paymentList.has(el.id === data.id)
-        //     //     // })
-        //     //     console.log('Выполнилась мутация')
-        //     //     console.log(data.id)
-        //     // }
-        //     // },
-        //     // setPaymentListData(state, payload) {
-        //     //   state.paymentList = payload
-        //     // },
-        //     // addDataPaymentsList(state, data) {
-        //     //   state.paymentList.push(data)
         },
         getDataCacheCoast(state, dataCache) {
             state.dataCacheCoast = dataCache
@@ -94,11 +60,6 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        // editPayment({commit, getters}, data) {
-        //     let wer = getters.getMap.get(data.id);
-        //     console.log(`получено ${wer}`)
-        //     commit('editDataPayment', wer, data)
-        // },
         fetchCategoryList({commit}) {
             return new Promise((resolve) => {
                 setTimeout(() => {
