@@ -6,10 +6,10 @@
 
         <component :is="settings.content"
                    v-if="showEditForm"
-                   :itemid="IdOfItem"
+                   :curItem="curItem"
                    :autoShowInputForm="true"
-                   :showBtnSave="false"
                    :showBtnAddcost="false"/>
+        <!--        :showBtnSave="false" -->
     </div>
 </template>
 
@@ -21,7 +21,7 @@
         },
         props: {
             settings: Object,
-            IdOfItem: Number //Значение id текущего выбранного платежа
+            curItem: Object //Значение id текущего выбранного платежа
         },
         data() {
             return {

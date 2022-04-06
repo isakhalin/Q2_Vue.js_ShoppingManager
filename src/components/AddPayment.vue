@@ -29,7 +29,7 @@
             showBtnAddcost: String, //Если true, то блокирует кнопку Add Cost
             categoryFromQuickPay: String,
             blocked: Boolean,
-            itemid: Number
+            curItem: Object
         },
         data() {
             return {
@@ -89,7 +89,7 @@
         },
         methods: {
             onSave() {
-                if (this.value && this.category) {
+                if (this.value && this.category && !this.curItem) {
                     const data = {
                         value: this.value,
                         category: this.category,
@@ -98,14 +98,54 @@
                     };
                     this.addData(data);
                     //his.$emit("addNewPayment", data);
+                } else {
+                    //console.log("Запуск едитдата")
+                    this.editData()
                 }
             },
             addData(data) {
                 this.$store.commit('addAdditionPayment', data)
+            },
+            editData() {
+                //console.log("Запустилась едитдата")
+                //this.$store.commit('editDataPayment', {map: this.$store.getters.getMap, item: this.curItem})
+                //this.$store.getters.getMap.get(this.curItem.id).value =
+                //this.$store.getters.getMap.set(this.curItem.id, this.curItem)
+                // this.$store.getters.getMap.get(this.curItem.id).value = this.value
+                // this.$store.getters.getMap.get(this.curItem.id).category = this.category
+                // this.$store.getters.getMap.get(this.curItem.id).date = this.date
+                let newData = {
+                    id: this.curItem.id,
+                    value: this.value,
+                    category: this.category,
+                    date: this.date
+                }
+                this.$store.commit('editDataPayment', newData)
             }
         },
         beforeMount() {
+            if (this.curItem) {
+                this.value = this.curItem.value;
+                this.category = this.curItem.category;
+                this.date = this.curItem.date;
+                // this.editData(this.curItem)
+                //console.log(this.$store.getters.getMap)
+            }
 
+            // if (this.itemId <= this.$store.getters.getAmountIemsInPaymentList) {
+            //     let cache = this.$store.getters.getPaymentList;
+            //     let currentItemWithId = cache.filter(el => { //В currentItemWithId хранится покупка с нужным ID
+            //         return el.id === this.itemId;
+            //     })
+            //     // let eee = currentItemWithId[0]
+            //     // console.log(eee)
+            //     // let eee = ...currentItemWithId.value
+            //     this.value = currentItemWithId[0].value;
+            //     this.category = currentItemWithId[0].category;
+            //     this.date = currentItemWithId[0].date;
+            //     console.log(`Это новый валуе ${this.value}`)
+            //     console.log(`Это новый категори ${this.category}`)
+            // }
         },
         async mounted() {
             if (!this.categoryList.length) {
@@ -123,17 +163,17 @@
             if (this.showBtnSave !== undefined) {
                 this.btnSaveShow = this.showBtnSave;
             }
-            if(this.showBtnAddcost !== undefined){
+            if (this.showBtnAddcost !== undefined) {
                 this.btnAddcostShow = this.showBtnAddcost;
             }
-            if(this.autoShowInputForm !== undefined){
+            if (this.autoShowInputForm !== undefined) {
                 this.showForm = this.autoShowInputForm;
             }
             // this.btnSaveShow = this.showBtnSave;
             // this.btnAddcostShow = this.showBtnAddcost;
         },
         updated() {
-            if (this.value && this.category && this.date) {
+            if (this.value && this.category && this.date && this.callFromQuick) {
                 this.onSave();
             }
         }

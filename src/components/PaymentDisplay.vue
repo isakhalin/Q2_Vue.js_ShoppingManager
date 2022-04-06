@@ -25,7 +25,7 @@
                 <td>{{ item.value }}</td>
                 <td>
                     <div class="editformwrapper">
-                        <button v-if="!modalShow" @click="editMenuOpen(item.id)">...</button>
+                        <button v-if="!modalShow" @click="editMenuOpen(item)">...</button>
                         <button v-else @click="modalShow = !modalShow">...</button>
                         <!--                        <component :is="ModalWindowEditMenu"/>-->
                     </div>
@@ -36,7 +36,7 @@
                 <ModalWindowEditMenu class="editForm"
                                      v-if="modalShow"
                                      :settings="settings"
-                                     :IdOfItem="currentItemId"/> <!--:valueAuto="" -->
+                                     :curItem="currentItem"/> <!--:valueAuto="" -->
         </transition>
     </div>
 </template>
@@ -61,7 +61,7 @@
                     content: 'AddPayment', //Имя компонента, которое мы будем передавать
                     title: 'Edit Cost'      //Заголовок, который мы будем передавать
                 },
-                currentItemId: '' //Значение id текущего выбранного платежа
+                currentItem: {} //Значение id текущего выбранного платежа
             }
         },
         methods: {
@@ -73,9 +73,10 @@
                 this.modalShow = false;
                 console.log('Отработал метод onHide2')
             },
-            editMenuOpen(idOfSelectedItem) {
-                this.currentItemId = idOfSelectedItem;
-                console.log(this.currentItemId)
+            editMenuOpen(item) {
+                //this.currentItemId = idOfSelectedItem;
+                this.currentItem = item;
+                //console.log(`Это текущий выбранный эл ${this.currentItem}`)
                 this.$modalEditMenu.showEditMenu('editPayment', this.settings)
             }
         },

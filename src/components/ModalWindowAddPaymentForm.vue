@@ -5,7 +5,7 @@
         </div>
         <div class="content">
             <!-- Подставляет компонент, имя которое соответствует тому, что передали в settings.content -->
-            <component :is="settings.content"/>
+            <component :is="settings.content" some="123"/>
             <!--            <AddPayment v-if="settings.content === 'addpayment'"/>-->
             <!--            <MyAuth v-if="settings.content === 'auth'"/>-->
         </div>
