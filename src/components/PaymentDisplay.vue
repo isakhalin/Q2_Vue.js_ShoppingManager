@@ -1,44 +1,52 @@
 <template>
-    <div class="list">
-        <!-- <div class="item" v-for="item in list" :key="item.id">
-          {{ item }}
-        </div> -->
-        <table class="paymentTable">
-            <tr>
-                <th>#</th>
-                <th>
-                    date
-                </th>
-                <th>
-                    category
-                </th>
-                <th>
-                    value
-                </th>
-            </tr>
-            <!--            <tr class="item" v-for="item in list" :key="item.id " :paymetnCounter="item.id">-->
-            <tr class="item" v-for="item in list" :key="item.id ">
+    <v-container>
+        <v-row>
+            <v-col>#</v-col>
+            <v-col>date</v-col>
+            <v-col>category</v-col>
+            <v-col>value</v-col>
+        </v-row>
+        <div class="list">
+            <!-- <div class="item" v-for="item in list" :key="item.id">
+              {{ item }}
+            </div> -->
+            <table class="paymentTable">
+<!--                <tr>-->
+<!--                    <th>#</th>-->
+<!--                    <th>-->
+<!--                        date-->
+<!--                    </th>-->
+<!--                    <th>-->
+<!--                        category-->
+<!--                    </th>-->
+<!--                    <th>-->
+<!--                        value-->
+<!--                    </th>-->
+<!--                </tr>-->
+                <!--            <tr class="item" v-for="item in list" :key="item.id " :paymetnCounter="item.id">-->
+                <tr class="item" v-for="item in list" :key="item.id ">
 
-                <td>{{ item.id }}</td>
-                <td>{{ item.date }}</td>
-                <td>{{ item.category }}</td>
-                <td>{{ item.value }}</td>
-                <td>
-                    <div class="editformwrapper">
-                        <button v-if="!modalShow" @click="editMenuOpen(item)">...</button>
-                        <button v-else @click="modalShow = !modalShow">...</button>
-                        <!--                        <component :is="ModalWindowEditMenu"/>-->
-                    </div>
-                </td>
-            </tr>
-        </table>
-        <transition name="fade">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.date }}</td>
+                    <td>{{ item.category }}</td>
+                    <td>{{ item.value }}</td>
+                    <td>
+                        <div class="editformwrapper">
+                            <button v-if="!modalShow" @click="editMenuOpen(item)">...</button>
+                            <button v-else @click="modalShow = !modalShow">...</button>
+                            <!--                        <component :is="ModalWindowEditMenu"/>-->
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <transition name="fade">
                 <ModalWindowEditMenu class="editForm"
                                      v-if="modalShow"
                                      :settings="settings"
                                      :curItem="currentItem"/> <!--:valueAuto="" -->
-        </transition>
-    </div>
+            </transition>
+        </div>
+    </v-container>
 </template>
 
 <script>

@@ -1,27 +1,42 @@
 <template>
-    <div class="wrapper">
-        <header>
-            <p class="title">My personal cost</p>
-            <div>My total {{ getFPV }}</div>
-        </header>
-        <main>
-            <!--            <AddPayment-->
-            <!--                    @addNewPayment="addData"-->
-            <!--            />-->
-<!--            <ModalWindowAddPaymentForm v-if="addFormShow" @close='addFormShow=false' :settings="settings" />-->
-            <PaymentsDisplay :list="currentElements"/>
-            <my-pagination
-                    :allPages="getAllPages"
-                    :testLength="additionPaymentList.length"
-                    :curPage="curPage"
-                    :elDisplay="elDisplay"
-                    @changePage="onChangePage"
-            />
-            <button @click="addFormOpen">
-                Add New Cost +
-            </button>
-        </main>
-    </div>
+    <v-container>
+        <v-row>
+            <v-col>
+                <v-btn color="teal" dark>
+                    ADD NEW COST <v-icon>mdi-plus</v-icon>
+                </v-btn>
+
+                <PaymentsDisplay :list="currentElements"/>
+
+            </v-col>
+            <v-col>
+                DIAGRAMMA
+            </v-col>
+        </v-row>
+        <!--        <div class="wrapper">-->
+        <!--            <header>-->
+        <!--                <p class="title">My personal cost</p>-->
+        <!--                <div>My total {{ getFPV }}</div>-->
+        <!--            </header>-->
+        <!--            <main>-->
+        <!--                &lt;!&ndash;            <AddPayment&ndash;&gt;-->
+        <!--                &lt;!&ndash;                    @addNewPayment="addData"&ndash;&gt;-->
+        <!--                &lt;!&ndash;            />&ndash;&gt;-->
+        <!--                &lt;!&ndash;            <ModalWindowAddPaymentForm v-if="addFormShow" @close='addFormShow=false' :settings="settings" />&ndash;&gt;-->
+        <!--                <PaymentsDisplay :list="currentElements"/>-->
+        <!--                <my-pagination-->
+        <!--                        :allPages="getAllPages"-->
+        <!--                        :testLength="additionPaymentList.length"-->
+        <!--                        :curPage="curPage"-->
+        <!--                        :elDisplay="elDisplay"-->
+        <!--                        @changePage="onChangePage"-->
+        <!--                />-->
+        <!--                <button @click="addFormOpen">-->
+        <!--                    Add New Cost +-->
+        <!--                </button>-->
+        <!--            </main>-->
+        <!--        </div>-->
+    </v-container>
 </template>
 
 <script>
@@ -87,7 +102,7 @@
                 }
             },
             //Вы зывает метод show из модуля и передает в него аргументы
-            addFormOpen(){
+            addFormOpen() {
                 this.$modal.show('addpayment', this.settings);
             }
         },
