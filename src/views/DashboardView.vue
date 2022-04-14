@@ -2,9 +2,20 @@
     <v-container>
         <v-row>
             <v-col>
-                <v-btn color="teal" dark>
-                    ADD NEW COST <v-icon>mdi-plus</v-icon>
-                </v-btn>
+                <div class="text-h5 text-sm-h3 pb-2">My Personal Costs</div>
+
+                <v-dialog v-model="dialog">
+                    <template v-slot:activator="{ on }">
+                        <v-btn color="teal" dark v-on="on">
+                            ADD NEW COST
+                            <v-icon>mdi-plus</v-icon>
+                        </v-btn>
+                    </template>
+                    <v-card>
+                        <AddPayment></AddPayment>
+                    </v-card>
+                </v-dialog>
+
 
                 <PaymentsDisplay :list="currentElements"/>
 
@@ -19,10 +30,10 @@
         <!--                <div>My total {{ getFPV }}</div>-->
         <!--            </header>-->
         <!--            <main>-->
-        <!--                &lt;!&ndash;            <AddPayment&ndash;&gt;-->
-        <!--                &lt;!&ndash;                    @addNewPayment="addData"&ndash;&gt;-->
-        <!--                &lt;!&ndash;            />&ndash;&gt;-->
-        <!--                &lt;!&ndash;            <ModalWindowAddPaymentForm v-if="addFormShow" @close='addFormShow=false' :settings="settings" />&ndash;&gt;-->
+        <!--                                    <AddPayment-->
+        <!--                                            @addNewPayment="addData"-->
+        <!--                                    />-->
+        <!--                                    <ModalWindowAddPaymentForm v-if="addFormShow" @close='addFormShow=false' :settings="settings" />-->
         <!--                <PaymentsDisplay :list="currentElements"/>-->
         <!--                <my-pagination-->
         <!--                        :allPages="getAllPages"-->
@@ -40,20 +51,23 @@
 </template>
 
 <script>
-    import MyPagination from "@/components/MyPagination.vue";
+    //import MyPagination from "@/components/MyPagination.vue";
     import PaymentsDisplay from "@/components/PaymentDisplay.vue";
     //import ModalWindowAddPaymentForm from "@/components/ModalWindowAddPaymentForm";
+    import AddPayment from "@/components/AddPayment.vue";
 
     export default {
         name: "DashboardView",
         components: {
             //ModalWindowAddPaymentForm,
             PaymentsDisplay,
-            MyPagination
+            AddPayment
+            //MyPagination
         },
         data() {
             return {
                 //addFormShow: false, //возможно теперь не нужен
+                dialog: false,
                 elDisplay: 3,
                 curPage: 1,
                 settings: {

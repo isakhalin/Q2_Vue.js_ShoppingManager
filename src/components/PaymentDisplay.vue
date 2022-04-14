@@ -1,43 +1,57 @@
 <template>
     <v-container>
         <v-row>
-            <v-col>#</v-col>
-            <v-col>date</v-col>
-            <v-col>category</v-col>
-            <v-col>value</v-col>
+            <v-col :cols="2">#</v-col>
+            <v-col :cols="3">date</v-col>
+            <v-col :cols="3">category</v-col>
+            <v-col :cols="3">value</v-col>
+            <v-col :cols="1"></v-col>
+        </v-row>
+        <v-row v-for="item in list" :key="item.id">
+            <v-col :cols="2">{{ item.id }}</v-col>
+            <v-col :cols="3">{{ item.date }}</v-col>
+            <v-col :cols="3">{{ item.category }}</v-col>
+            <v-col :cols="3">{{ item.value }}</v-col>
+            <v-col :cols="1">
+                <div class="editformwrapper">
+                    <button v-if="!modalShow" @click="editMenuOpen(item)">...</button>
+                    <button v-else @click="modalShow = !modalShow">...</button>
+                    <!--                        <component :is="ModalWindowEditMenu"/>-->
+                </div>
+            </v-col>
         </v-row>
         <div class="list">
             <!-- <div class="item" v-for="item in list" :key="item.id">
               {{ item }}
             </div> -->
             <table class="paymentTable">
-<!--                <tr>-->
-<!--                    <th>#</th>-->
-<!--                    <th>-->
-<!--                        date-->
-<!--                    </th>-->
-<!--                    <th>-->
-<!--                        category-->
-<!--                    </th>-->
-<!--                    <th>-->
-<!--                        value-->
-<!--                    </th>-->
-<!--                </tr>-->
+                <!--                <tr>-->
+                <!--                    <th>#</th>-->
+                <!--                    <th>-->
+                <!--                        date-->
+                <!--                    </th>-->
+                <!--                    <th>-->
+                <!--                        category-->
+                <!--                    </th>-->
+                <!--                    <th>-->
+                <!--                        value-->
+                <!--                    </th>-->
+                <!--                </tr>-->
                 <!--            <tr class="item" v-for="item in list" :key="item.id " :paymetnCounter="item.id">-->
-                <tr class="item" v-for="item in list" :key="item.id ">
+<!--                <tr class="item" v-for="item in list" :key="item.id ">-->
 
-                    <td>{{ item.id }}</td>
-                    <td>{{ item.date }}</td>
-                    <td>{{ item.category }}</td>
-                    <td>{{ item.value }}</td>
-                    <td>
-                        <div class="editformwrapper">
-                            <button v-if="!modalShow" @click="editMenuOpen(item)">...</button>
-                            <button v-else @click="modalShow = !modalShow">...</button>
-                            <!--                        <component :is="ModalWindowEditMenu"/>-->
-                        </div>
-                    </td>
-                </tr>
+<!--                    <td>{{ item.id }}</td>-->
+<!--                    <td>{{ item.date }}</td>-->
+<!--                    <td>{{ item.category }}</td>-->
+<!--                    <td>{{ item.value }}</td>-->
+<!--                    <td>-->
+<!--                        <div class="editformwrapper">-->
+<!--                            <button v-if="!modalShow" @click="editMenuOpen(item)">...</button>-->
+<!--                            <button v-else @click="modalShow = !modalShow">...</button>-->
+<!--                            &lt;!&ndash;                        <component :is="ModalWindowEditMenu"/>&ndash;&gt;-->
+<!--                        </div>-->
+<!--                    </td>-->
+<!--                </tr>-->
             </table>
             <transition name="fade">
                 <ModalWindowEditMenu class="editForm"

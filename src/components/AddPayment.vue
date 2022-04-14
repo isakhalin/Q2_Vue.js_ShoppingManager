@@ -1,20 +1,26 @@
 <template>
-    <div class="AddPayment">
-        <button @click="showForm = !showForm" v-show="btnAddcostShow">Add New Cost</button>
-        <div v-show="showForm">
-            <input placeholder="Value" v-model.lazy="value"/>
-            <div class="categoryList" v-if="categoryList">
-                <select v-model="category">
-                    <option v-for="(option, idx) in categoryList" :key="idx + 1">
-                        {{ option }}
-                    </option>
-                </select>
-            </div>
-            <!-- <input placeholder="Category" v-model="category" /> -->
-            <input placeholder="Enter date" v-model.lazy="date"/>
-            <button class="save" v-show="btnSaveShow" @click="onSave">Save!</button>
-        </div>
-    </div>
+    <v-card class="text-left pa-8">
+        <v-text-field v-model="date" label="Date" />
+        <v-text-field v-model="value" label="Value" />
+        <v-select v-model="category" :items="categoryList" label="Category" />
+        <v-btn color="teal" dark @click="onSave">Save</v-btn>
+<!--        <div class="AddPayment">-->
+<!--            <button @click="showForm = !showForm" v-show="btnAddcostShow">Add New Cost</button>-->
+<!--            <div v-show="showForm">-->
+<!--                <input placeholder="Value" v-model.lazy="value"/>-->
+<!--                <div class="categoryList" v-if="categoryList">-->
+<!--                    <select v-model="category">-->
+<!--                        <option v-for="(option, idx) in categoryList" :key="idx + 1">-->
+<!--                            {{ option }}-->
+<!--                        </option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--                &lt;!&ndash; <input placeholder="Category" v-model="category" /> &ndash;&gt;-->
+<!--                <input placeholder="Enter date" v-model.lazy="date"/>-->
+<!--                <button class="save" v-show="btnSaveShow" @click="onSave">Save!</button>-->
+<!--            </div>-->
+<!--        </div>-->
+    </v-card>
 </template>
 
 <script>
@@ -90,7 +96,7 @@
                         id: this.getAllPayments + 1,
                     };
                     this.addData(data);
-                    //his.$emit("addNewPayment", data);
+                    //this.$emit("addNewPayment", data);
                 } else {
                     //console.log("Запуск едитдата")
                     this.editData()
