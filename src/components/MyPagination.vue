@@ -1,16 +1,24 @@
 <template>
-    <div :class="[$style.wrp]">
-        <div @click="onClick(curPage - 1)">-</div>
-        <div
-                v-for="i in amount"
-                :key="i"
-                @click="onClick(i)"
-                :class="{ [$style.active]: curPage === i }"
-        >
-            {{ i }}
+    <!--    <div :class="[$style.wrp]">-->
+    <!--        <div @click="onClick(curPage - 1)">-</div>-->
+    <!--        <div-->
+    <!--                v-for="i in amount"-->
+    <!--                :key="i"-->
+    <!--                @click="onClick(i)"-->
+    <!--                :class="{ [$style.active]: curPage === i }"-->
+    <!--        >-->
+    <!--            {{ i }}-->
+    <!--        </div>-->
+    <!--        <div @click="onClick(curPage + 1)">+</div>-->
+    <!--    </div>-->
+        <div class="text-center">
+            <v-pagination
+                    v-model="page"
+                    :length="allPages"
+                    prev-icon="mdi-menu-left"
+                    next-icon="mdi-menu-right"
+            ></v-pagination>
         </div>
-        <div @click="onClick(curPage + 1)">+</div>
-    </div>
 </template>
 
 <script>
@@ -20,7 +28,13 @@
             allPages: Number,
             testLength: Number,
             elDisplay: Number,
-            curPage: Number,
+            //curPage: Number,
+            //page: 1
+        },
+        data() {
+            return {
+                page: 1
+            }
         },
         computed: {
             amount() {
@@ -35,12 +49,17 @@
                 return this.$store.getters.getAllPages;
             }
         },
+        updated() {
+          this.onClick()
+        },
         methods: {
-            onClick(page) {
-                if (page < 1 || page > this.amount) {
-                    return;
-                }
-                this.$emit("changePage", page);
+            onClick() {
+                // if (page < 1 || page > this.amount) {
+                //     return;
+                // }
+                console.log("fsegs")
+                console.log(this.$store.getters.getMap  )
+                this.$emit("changePage", this.page);
             },
         },
     };

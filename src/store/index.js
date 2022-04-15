@@ -57,6 +57,19 @@ export default new Vuex.Store({
         },
         setCurrentElements(state, data) {
             state.currentElements = data
+        },
+        deleteCurrentPayment(state, data) {
+            if (data.id <= (state.allpages * state.displayedItems)) {
+                //console.log(state.paymentList)
+                let idxOfDeleteItem = state.paymentList.findIndex((el) => {
+                    return (data.id === el.id)
+                });
+                //console.log(idxOfDeleteItem)
+                //console.log(qwe.indexOf(data))
+                state.paymentList.splice(idxOfDeleteItem, 1)
+                //console.log(state.paymentList)
+                state.currentElements.splice(idxOfDeleteItem, 1)
+            }
         }
     },
     actions: {

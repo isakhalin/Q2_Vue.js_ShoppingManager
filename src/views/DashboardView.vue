@@ -16,8 +16,11 @@
                     </v-card>
                 </v-dialog>
 
-
                 <PaymentsDisplay :list="currentElements"/>
+
+                <MyPagination :allPages="getAllPages"
+                              @changePage="onChangePage"
+                />
 
             </v-col>
             <v-col>
@@ -55,10 +58,12 @@
     import PaymentsDisplay from "@/components/PaymentDisplay.vue";
     //import ModalWindowAddPaymentForm from "@/components/ModalWindowAddPaymentForm";
     import AddPayment from "@/components/AddPayment.vue";
+    import MyPagination from "@/components/MyPagination";
 
     export default {
         name: "DashboardView",
         components: {
+            MyPagination,
             //ModalWindowAddPaymentForm,
             PaymentsDisplay,
             AddPayment
@@ -107,6 +112,9 @@
             }
         },
         methods: {
+            // updPage(data){
+            //   this.curPage = data
+            // },
             onChangePage(page) {
                 this.curPage = page;
                 if (page > this.getAllPages) {
