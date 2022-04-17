@@ -237,11 +237,10 @@
                 value: ''
             },
             defaultItem: {
-                name: '',
-                calories: 0,
-                fat: 0,
-                carbs: 0,
-                protein: 0,
+                id: '',
+                date: '',
+                category: '',
+                value: ''
             },
         }),
 
@@ -252,6 +251,16 @@
             //Свой метод. Получение списка категорий из сторы
             categoryList() {
                 return this.$store.getters.getCategoryList;
+            },
+            getAllPayments() {
+                return this.$store.getters.getAllPayments; //Получаем общее количество покупок
+            },
+            getCurrentDate() {
+                const today = new Date();
+                const day = today.getDate();
+                const month = today.getMonth() + 1;
+                const year = today.getFullYear();
+                return `${day}.${month}.${year}`;
             },
         },
 
@@ -382,12 +391,21 @@
 
             save() {
                 if (this.editedIndex > -1) {
-                    Object.assign(this.desserts[this.editedIndex], this.editedItem)
+                    //Object.assign(this.desserts[this.editedIndex], this.editedItem)
+                    this.$store.commit('editDataPayment', this.editedItem)
+                    this.close()
                 } else {
-                    this.desserts.push(this.editedItem)
+                    //this.desserts.push(this.editedItem)
+                    if (this.editedItem.value && this.editedItem.category) {
+                        let newObj = Object.assign(this.editedItem, {
+                            id: this.getAllPayments + 1,
+                            date: this.editedItem.date || this.getCurrentDate
+                        });
+                        this.$store.commit('addAdditionPayment', newObj)
+                        this.close()
+                    }
                 }
-                this.close()
-            },
+            }
         }
     }
 

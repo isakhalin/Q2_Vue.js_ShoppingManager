@@ -28,12 +28,15 @@ export default new Vuex.Store({
                 state.additionPaymentList.reduce((res, cur) => res + Number(cur.value), 0)
         },
         getCurrentElements: state => state.currentElements,
+        // getValueOfCategory: state => {
+        //     return {
+        //
+        //     }
+        // },
         getMap: (state) => {
             const tempMap = new Map();
             state.paymentList.forEach(el => tempMap.set(el.id, el))
             state.additionPaymentList.forEach(el => tempMap.set(el.id, el))
-            // console.log(tempMap)
-            console.log(tempMap)
             return tempMap
         },
     },
@@ -59,17 +62,25 @@ export default new Vuex.Store({
             state.currentElements = data
         },
         deleteCurrentPayment(state, data) {
-            if (data.id <= (state.allpages * state.displayedItems)) {
-                //console.log(state.paymentList)
-                let idxOfDeleteItem = state.paymentList.findIndex((el) => {
-                    return (data.id === el.id)
-                });
-                //console.log(idxOfDeleteItem)
-                //console.log(qwe.indexOf(data))
-                state.paymentList.splice(idxOfDeleteItem, 1)
-                //console.log(state.paymentList)
-                state.currentElements.splice(idxOfDeleteItem, 1)
+            //Функция возвращает индекс искомого объекта в заданном массиве.
+            //arr - принятый массив
+            //payment - Искомый объект
+            function findIdxInArray(arr, payment) {
+                return arr.findIndex((el) => {
+                    return (payment.id === el.id)
+                })
             }
+
+            if (data.id <= (state.allpages * state.displayedItems)) {
+                state.paymentList.splice(state.paymentList.indexOf(this.getters.getMap.get(data.id)), 1)
+                //console.log(this.getters.getMap.get(data.id))
+                //console.log(state.paymentList.indexOf(data))
+                //state.paymentList.splice(findIdxInArray(state.paymentList, data), 1)
+                //state.currentElements.splice(findIdxInArray(state.currentElements, data), 1)
+            } else {
+                state.additionPaymentList.splice(state.additionPaymentList.indexOf(this.getters.getMap.get(data.id)), 1)
+            }
+            state.currentElements.splice(findIdxInArray(state.currentElements, data), 1)
         }
     },
     actions: {
@@ -93,7 +104,6 @@ export default new Vuex.Store({
                     commit('getDataCacheCoast', total)
                     const tempDataArr = data[`page${page}`]
                     const tempArr = tempDataArr.filter(elem => {
-
                         return getters.getMap.has(elem.id)
                     })
                     if (tempArr.length) {

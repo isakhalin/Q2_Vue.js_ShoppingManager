@@ -2,29 +2,34 @@
     <v-container>
         <v-row>
             <v-col>
-                <div class="text-h5 text-sm-h3 pb-2">My Personal Costs</div>
+                <div class="text-h5 text-sm-h4 pb-2">Менеджер покупок</div>
 
-                <v-dialog v-model="dialog">
-                    <template v-slot:activator="{ on }">
-                        <v-btn color="teal" dark v-on="on">
-                            ADD NEW COST
-                            <v-icon>mdi-plus</v-icon>
-                        </v-btn>
-                    </template>
-                    <v-card>
-                        <AddPayment></AddPayment>
-                    </v-card>
-                </v-dialog>
+                <!--                <v-dialog v-model="dialog">-->
+                <!--                    <template v-slot:activator="{ on }">-->
+                <!--                        <v-btn color="teal" dark v-on="on">-->
+                <!--                            ADD NEW COST-->
+                <!--                            <v-icon>mdi-plus</v-icon>-->
+                <!--                        </v-btn>-->
+                <!--                    </template>-->
+                <!--                    <v-card>-->
+                <!--                        <AddPayment></AddPayment>-->
+                <!--                    </v-card>-->
+                <!--                </v-dialog>-->
+
+                <DashBoardStats :summ="getValueOfAllPayments"/>
 
                 <PaymentsDisplay :list="currentElements"/>
 
                 <MyPagination :allPages="getAllPages"
+                              :additionPaymentListLength="additionPaymentList.length"
+                              :displayedElements="displayedElements"
                               @changePage="onChangePage"
                 />
-
             </v-col>
+
             <v-col>
                 DIAGRAMMA
+                <PieChart></PieChart>
             </v-col>
         </v-row>
         <!--        <div class="wrapper">-->
@@ -49,37 +54,44 @@
         <!--                    Add New Cost +-->
         <!--                </button>-->
         <!--            </main>-->
-        <!--        </div>-->
+        <!--        </div>--->
     </v-container>
 </template>
 
 <script>
-    //import MyPagination from "@/components/MyPagination.vue";
+
     import PaymentsDisplay from "@/components/PaymentDisplay.vue";
-    //import ModalWindowAddPaymentForm from "@/components/ModalWindowAddPaymentForm";
-    import AddPayment from "@/components/AddPayment.vue";
     import MyPagination from "@/components/MyPagination";
+    import DashBoardStats from "@/components/DashBoardStats";
+    import PieChart from "@/components/PieChart";
+
+    //import ModalWindowAddPaymentForm from "@/components/ModalWindowAddPaymentForm";
+    //import AddPayment from "@/components/AddPayment.vue";
+    //import MyPagination from "@/components/MyPagination.vue";
 
     export default {
         name: "DashboardView",
         components: {
             MyPagination,
-            //ModalWindowAddPaymentForm,
+            DashBoardStats,
             PaymentsDisplay,
-            AddPayment
+            PieChart
+            //ModalWindowAddPaymentForm,
+            //AddPayment,
             //MyPagination
         },
         data() {
             return {
                 //addFormShow: false, //возможно теперь не нужен
                 dialog: false,
-                elDisplay: 3,
+                displayedElements: 3,
                 curPage: 1,
                 settings: {
                     content: 'AddPayment',
                     title: 'Add new Payment'
 
-                }
+                },
+                curElements: []
             };
         },
         computed: {
@@ -94,9 +106,12 @@
             },
             additionCurrentElements() {
                 return this.additionPaymentList.slice(
-                    this.elDisplay * ((this.curPage - this.getAllPages) - 1),
-                    this.elDisplay * ((this.curPage - this.getAllPages) - 1) + this.elDisplay
+                    this.displayedElements * ((this.curPage - this.getAllPages) - 1),
+                    this.displayedElements * ((this.curPage - this.getAllPages) - 1) + this.displayedElements
                 );
+            },
+            getCurrentElements() {
+                return this.$store.getters.getCurrentElements;
             },
             currentElements() {
                 if (this.curPage <= this.getAllPages) {
@@ -105,11 +120,22 @@
                     return this.additionCurrentElements;
                 }
             },
+            //Возвращает сумму всех покупок
+            getValueOfAllPayments() {
+                return this.$store.getters.getFullPaymentValue;
+            }
         },
         watch: {
             '$router': function (newValue, oldValue) {
                 console.log(newValue, oldValue);
-            }
+            },
+            // currentElements: function () {
+            //     this.curElements = this.$store.getters.getCurrentElements;
+            //     console.log(this.curElements)
+            //     // console.log(oldVal)
+            //     // console.log(newVal)
+            //     console.log('Changed')
+            // }
         },
         methods: {
             // updPage(data){
@@ -131,10 +157,25 @@
         created() {
             this.$store.dispatch("fetchCategoryList");
             this.$store.dispatch("fetchDataGit", this.curPage);
+
         },
+        // updated() {
+        //     this.curElements = this.currentElements
+        // },
+        // beforeMount() {
+        //     this.curElements = [1, 2, 3];
+        // },
         async mounted() {
             await this.$store.dispatch('fetchDataGit');
             //this.curPage = Number(this.$route.params.page);
+            // this.curElements = this.currentElements;
+            // console.log('сейчас в карент элментс')
+            // this.curElements = this.currentElements;
+            // console.log(this.currentElements)
+            // setTimeout(() => {
+            //     this.curElements = this.currentElements;
+            //     console.log('Прошло 5сек')
+            // }, 100)
         }
     };
 </script>

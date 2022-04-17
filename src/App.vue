@@ -5,6 +5,7 @@
         >
             <v-btn plain :ripple="false" to="/dashboard">Dashboard</v-btn>
             <v-btn to="/about">About</v-btn>
+            <v-btn @click="runTest">See Console</v-btn>
 
         </v-app-bar>
 
@@ -22,5 +23,10 @@
         data: () => ({
             //
         }),
+        methods: {
+            runTest() {
+                console.log(this.$store.getters.getPaymentList)
+            }
+        }
     };
 </script>

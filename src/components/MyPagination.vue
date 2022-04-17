@@ -14,7 +14,7 @@
         <div class="text-center">
             <v-pagination
                     v-model="page"
-                    :length="allPages"
+                    :length="amount"
                     prev-icon="mdi-menu-left"
                     next-icon="mdi-menu-right"
             ></v-pagination>
@@ -26,8 +26,8 @@
         name: "MyPagination",
         props: {
             allPages: Number,
-            testLength: Number,
-            elDisplay: Number,
+            additionPaymentListLength: Number,
+            displayedElements: Number,
             //curPage: Number,
             //page: 1
         },
@@ -43,11 +43,11 @@
                 // } else {
                 //   return Math.ceil(this.length / this.elDisplay + 6 );
                 // }
-                return Math.ceil(this.testLength / this.elDisplay + this.allPages)
+                return Math.ceil(this.additionPaymentListLength / this.displayedElements + this.allPages)
             },
-            getAllPages() {
-                return this.$store.getters.getAllPages;
-            }
+            // getAllPages() {
+            //     return this.$store.getters.getAllPages;
+            // }
         },
         updated() {
           this.onClick()
@@ -57,8 +57,8 @@
                 // if (page < 1 || page > this.amount) {
                 //     return;
                 // }
-                console.log("fsegs")
-                console.log(this.$store.getters.getMap  )
+                // console.log("fsegs")
+                // console.log(this.$store.getters.getMap  )
                 this.$emit("changePage", this.page);
             },
         },
