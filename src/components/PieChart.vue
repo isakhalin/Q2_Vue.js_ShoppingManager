@@ -1,7 +1,7 @@
 <template>
     <Pie
             :chart-options="chartOptions"
-            :chart-data="getChartData"
+            :chart-data="getValueOfCategorys"
             :chart-id="chartId"
             :dataset-id-key="datasetIdKey"
             :plugins="plugins"
@@ -94,23 +94,46 @@
                     ]
                 }
             },
-            // getValueOfCategorys() {
-            //     let catList = [...this.$store.getters.getCategoryList]
-            //     catList.forEach(el => {
-            //
-            //     });
-            //
-            //     return {
-            //         Cat1: 157,
-            //         Cat2: 24,
-            //         Cat3: 432,
-            //         Cat4: 23,
-            //         Cat5: 34,
-            //         Cat6: 64,
-            //         Cat7: 345,
-            //         Cat8: 534
-            //     }
-            // }
+            getValueOfCategorys() {
+                let dataForChart = {
+                    labels: [],
+                    datasets: [
+                        {
+                            backgroundColor: [
+                                '#41b883', '#795f45', '#00D8FF', '#DD1B16',
+                                '#717642', '#B54352', '#01D5DF', '#DBE214',
+                                '#3774ee', '#7c45a0'
+                            ],
+                            data: []
+                        }
+                    ]
+                }
+                let paymentList = this.$store.getters.getPaymentList;
+                let catList = this.$store.getters.getCategoryList;
+                console.log(paymentList)
+                console.log(catList)
+                console.log('Дальше')
+                // paymentList.forEach(el => {
+                //
+                // })
+                // catList.forEach(el => { // el = Food
+                //     let initialValue = 0;  //Начальное значение
+                //     let summ = paymentList.reduce((accumulator, currentValue) => {
+                //             if (currentValue.category === el) {
+                //                 return accumulator + currentValue.value
+                //             } else {
+                //                 return 0
+                //             }
+                //         }, initialValue
+                //     );
+                //     console.log(`Cумма ${el} равна ${summ}`)
+                //     console.log(summ)
+                //     dataForChart.labels.push(el);
+                //     dataForChart.datasets.data.push(summ);
+                // });
+
+                return dataForChart;
+            }
         }
     }
 </script>
