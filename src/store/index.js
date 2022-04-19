@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
+        cachedList: [],     //Кеширующий массив. Тут целиком хранится массив из fetch.
         paymentList: [],
         additionPaymentList: [],
         categoryList: [],
@@ -14,6 +15,7 @@ export default new Vuex.Store({
         dataCacheCoast: 0,
     },
     getters: {
+        getCachedList: state => state.cachedList,
         test: state => state.test,
         getAllPayments: state => (state.allpages * state.displayedItems) + state.additionPaymentList.length,
         getDisplayedItems: state => state.displayedItems, //Возвращает количество отображаемых платежей на одной странице
@@ -81,6 +83,9 @@ export default new Vuex.Store({
                 state.additionPaymentList.splice(state.additionPaymentList.indexOf(this.getters.getMap.get(data.id)), 1)
             }
             state.currentElements.splice(findIdxInArray(state.currentElements, data), 1)
+        },
+        setCachedList(state, data) {
+            state.cachedList = data
         }
     },
     actions: {
@@ -94,15 +99,26 @@ export default new Vuex.Store({
             })
         },
         fetchDataGit({commit, getters}, page) {
-            fetch('https://raw.githubusercontent.com/Feikkont/git_repo/master/vue-expenses/resolve.json')
+            fetch('https://raw.githubusercontent.com/isakhalin/API/main/Payment%20Manager/resolve.json')
                 .then(response => response.json())
                 .then(data => {
+                    //console.log(data)
                     let total = 0;
+                    let dataFromApi = [];
                     for (let elem in data) {
-                        data[elem].forEach(el => total += Number(el.value))
+                        //console.log(elem)
+                        data[elem].forEach(el => {
+                            total += Number(el.value);
+                            dataFromApi.push(el)
+                        })
                     }
+                    commit('setCachedList', dataFromApi)
                     commit('getDataCacheCoast', total)
+
+
                     const tempDataArr = data[`page${page}`]
+                    // console.log('Ниже значение tempDataArr')
+                    // console.log(tempDataArr)
                     const tempArr = tempDataArr.filter(elem => {
                         return getters.getMap.has(elem.id)
                     })

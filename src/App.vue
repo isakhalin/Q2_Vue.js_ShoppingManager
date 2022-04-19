@@ -25,7 +25,7 @@
         }),
         methods: {
             runTest() {
-                console.log(this.$store.getters.getPaymentList)
+                console.log(this.$store.getters.getCachedList)
             }
         }
     };

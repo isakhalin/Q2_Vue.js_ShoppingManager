@@ -26,7 +26,8 @@
         name: "MyPagination",
         props: {
             allPages: Number,
-            additionPaymentListLength: Number,
+            cachedListLength: Number,
+            //additionPaymentListLength: Number,
             displayedElements: Number,
             //curPage: Number,
             //page: 1
@@ -43,7 +44,8 @@
                 // } else {
                 //   return Math.ceil(this.length / this.elDisplay + 6 );
                 // }
-                return Math.ceil(this.additionPaymentListLength / this.displayedElements + this.allPages)
+                //return Math.ceil(this.additionPaymentListLength / this.displayedElements + this.allPages)
+                return Math.ceil(this.cachedListLength / this.displayedElements)
             },
             // getAllPages() {
             //     return this.$store.getters.getAllPages;

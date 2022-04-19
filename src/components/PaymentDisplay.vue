@@ -5,7 +5,11 @@
                 :items="list"
                 sort-by=""
                 class="elevation-1"
-                :hideDefaultFooter=true
+                :hideDefaultFooter=false
+                :footer-props="{itemsPerPageOptions: [3, 5, 10]}"
+                :items-per-page="3"
+                @update:items-per-page="currentItemsPerPage"
+                :page="page"
         >
             <template v-slot:top>
                 <v-toolbar
@@ -72,7 +76,7 @@
                                                 md="4"
                                         >
                                             <v-text-field
-                                                    v-model="editedItem.value"
+                                                    v-model.number="editedItem.value"
                                                     label="Стоимость"
                                             ></v-text-field>
                                         </v-col>
@@ -211,6 +215,9 @@
             list: {
                 type: Array,
                 default: () => []
+            },
+            page: {
+                type: Number
             }
         },
         data: () => ({
@@ -388,7 +395,6 @@
                     this.editedIndex = -1
                 })
             },
-
             save() {
                 if (this.editedIndex > -1) {
                     //Object.assign(this.desserts[this.editedIndex], this.editedItem)
@@ -405,6 +411,9 @@
                         this.close()
                     }
                 }
+            },
+            currentItemsPerPage(perPage) {
+                this.$emit('changeItemsPerPage', perPage)
             }
         }
     }
@@ -482,3 +491,5 @@
         background: #efefef;
     }
 </style>
+
+

@@ -18,17 +18,20 @@
 
                 <DashBoardStats :summ="getValueOfAllPayments"/>
 
-                <PaymentsDisplay :list="currentElements"/>
+                <PaymentsDisplay :list="getCachedList"
+                                 @changeItemsPerPage="displayedElements = $event"
+                                 :page="curPage"
+                />
 
                 <MyPagination :allPages="getAllPages"
-                              :additionPaymentListLength="additionPaymentList.length"
+                              :cachedListLength="cachedList.length"
                               :displayedElements="displayedElements"
                               @changePage="onChangePage"
+
                 />
             </v-col>
 
             <v-col>
-                DIAGRAMMA
                 <PieChart></PieChart>
             </v-col>
         </v-row>
@@ -91,7 +94,7 @@
                     title: 'Add new Payment'
 
                 },
-                curElements: []
+                //curElements: []
             };
         },
         computed: {
@@ -103,6 +106,9 @@
             },
             additionPaymentList() {
                 return this.$store.getters.getAdditionPaymentList
+            },
+            cachedList() {
+                return this.$store.getters.getCachedList
             },
             additionCurrentElements() {
                 return this.additionPaymentList.slice(
@@ -123,6 +129,9 @@
             //Возвращает сумму всех покупок
             getValueOfAllPayments() {
                 return this.$store.getters.getFullPaymentValue;
+            },
+            getCachedList(){
+                return this.$store.getters.getCachedList
             }
         },
         watch: {
@@ -143,21 +152,20 @@
             // },
             onChangePage(page) {
                 this.curPage = page;
-                if (page > this.getAllPages) {
-                    return;
-                } else {
-                    this.$store.dispatch("fetchDataGit", page);
-                }
+                // if (page > this.getAllPages) {
+                //     return;
+                // } else {
+                //     this.$store.dispatch("fetchDataGit", page);
+                // }
             },
             //Вы зывает метод show из модуля и передает в него аргументы
             addFormOpen() {
                 this.$modal.show('addpayment', this.settings);
             }
         },
-        created() {
+        async created() {
+            await this.$store.dispatch("fetchDataGit", this.curPage);
             this.$store.dispatch("fetchCategoryList");
-            this.$store.dispatch("fetchDataGit", this.curPage);
-
         },
         // updated() {
         //     this.curElements = this.currentElements
@@ -165,8 +173,8 @@
         // beforeMount() {
         //     this.curElements = [1, 2, 3];
         // },
-        async mounted() {
-            await this.$store.dispatch('fetchDataGit');
+        mounted() {
+            //this.$store.dispatch('fetchDataGit', this.curPage);
             //this.curPage = Number(this.$route.params.page);
             // this.curElements = this.currentElements;
             // console.log('сейчас в карент элментс')
