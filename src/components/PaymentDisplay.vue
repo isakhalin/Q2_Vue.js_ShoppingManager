@@ -6,10 +6,10 @@
                 sort-by=""
                 class="elevation-1"
                 :hideDefaultFooter=false
-                :footer-props="{itemsPerPageOptions: [3, 5, 10]}"
+                :footer-props="{itemsPerPageOptions: [3, 5, 10, 15, 50]}"
                 :items-per-page="3"
                 @update:items-per-page="currentItemsPerPage"
-                :page="page"
+                :page.sync="pageToTable"
         >
             <template v-slot:top>
                 <v-toolbar
@@ -217,10 +217,12 @@
                 default: () => []
             },
             page: {
-                type: Number
+                type: Number,
+                default: () => {}
             }
         },
         data: () => ({
+            pageToTable: '',
             dialog: false,
             dialogDelete: false,
             headers: [
@@ -250,7 +252,6 @@
                 value: ''
             },
         }),
-
         computed: {
             formTitle() {
                 return this.editedIndex === -1 ? 'Новый платеж' : 'Изменение платежа'
@@ -278,10 +279,17 @@
             dialogDelete(val) {
                 val || this.closeDelete()
             },
+            page: function (newVal) {
+                this.pageToTable = newVal
+            }
         },
 
         created() {
-            this.initialize()
+            this.pageToTable = this.page;
+            //this.initialize();
+        },
+        updated() {
+           this.$emit('pageFromTable', this.pageToTable)
         },
 
         methods: {
@@ -404,9 +412,10 @@
                     //this.desserts.push(this.editedItem)
                     if (this.editedItem.value && this.editedItem.category) {
                         let newObj = Object.assign(this.editedItem, {
-                            id: this.getAllPayments + 1,
+                            id: this.$store.getters.getLastPaymentId + 1,
                             date: this.editedItem.date || this.getCurrentDate
                         });
+                        console.log(newObj)
                         this.$store.commit('addAdditionPayment', newObj)
                         this.close()
                     }

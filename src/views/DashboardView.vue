@@ -21,14 +21,20 @@
                 <PaymentsDisplay :list="getCachedList"
                                  @changeItemsPerPage="displayedElements = $event"
                                  :page="curPage"
+                                 @pageFromTable="curPage = $event"
                 />
-
-                <MyPagination :allPages="getAllPages"
-                              :cachedListLength="cachedList.length"
+                <MyPagination :cachedListLength="cachedList.length"
                               :displayedElements="displayedElements"
                               @changePage="onChangePage"
+                              :curPage="curPage"
 
                 />
+                <!--                <MyPagination :allPages="getAllPages"-->
+                <!--                              :cachedListLength="cachedList.length"-->
+                <!--                              :displayedElements="displayedElements"-->
+                <!--                              @changePage="onChangePage"-->
+
+                <!--                />-->
             </v-col>
 
             <v-col>
@@ -130,7 +136,7 @@
             getValueOfAllPayments() {
                 return this.$store.getters.getFullPaymentValue;
             },
-            getCachedList(){
+            getCachedList() {
                 return this.$store.getters.getCachedList
             }
         },

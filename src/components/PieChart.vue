@@ -89,7 +89,7 @@
                         data: []
                     }]
                 }
-                let paymentList = this.$store.getters.getPaymentList;
+                let paymentList = this.$store.getters.getCachedList;
                 let catList = this.$store.getters.getCategoryList;
                 catList.forEach(el => { // el = Food
                     let initialValue = 0;  //Начальное значение

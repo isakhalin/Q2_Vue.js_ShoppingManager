@@ -25,7 +25,8 @@
     export default {
         name: "MyPagination",
         props: {
-            allPages: Number,
+            curPage: Number,
+            //allPages: Number,
             cachedListLength: Number,
             //additionPaymentListLength: Number,
             displayedElements: Number,
@@ -34,7 +35,12 @@
         },
         data() {
             return {
-                page: 1
+                page: this.curPage
+            }
+        },
+        watch: {
+            curPage: function (newVal) {
+                this.page = newVal;
             }
         },
         computed: {
