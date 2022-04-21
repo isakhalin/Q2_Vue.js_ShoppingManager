@@ -98,7 +98,6 @@
                 settings: {
                     content: 'AddPayment',
                     title: 'Add new Payment'
-
                 },
                 //curElements: []
             };
