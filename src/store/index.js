@@ -20,11 +20,11 @@ export default new Vuex.Store({
         //getAllPayments: state => (state.allpages * state.displayedItems) + state.additionPaymentList.length,
         getLastPaymentId: state => {
             let lengthOfArr = state.cachedList.length; //18
-            let idx = state.cachedList[lengthOfArr-1].id;
+            let idx = state.cachedList[lengthOfArr - 1].id;
             return idx;
         },
         getDisplayedItems: state => state.displayedItems, //Возвращает количество отображаемых платежей на одной странице
-        getAmountIemsInPaymentList: state => state.allpages * state.displayedItems, //Общее количество платежей в кешированном списке paymentList
+        //getAmountIemsInPaymentList: state => state.allpages * state.displayedItems, //Общее количество платежей в кешированном списке paymentList
         getAllPages: state => state.allpages,
         getPaymentList: state => state.paymentList,
         getAdditionPaymentList: state => state.additionPaymentList,
@@ -54,8 +54,16 @@ export default new Vuex.Store({
         addAdditionPayment(state, data) {
             state.cachedList.push(data);
         },
+        addAdditionCategory(state, data) {
+            let isContainCat = state.categoryList.find((el) => {
+                return el === data
+            })
+            if (!isContainCat) {
+                state.categoryList.push(data);
+            }
+        },
         editDataPayment(state, newData) {   //Сюда в дата приходит объект
-            console.log(newData)
+            //console.log(newData)
             this.getters.getMap.get(newData.id).value = newData.value;
             this.getters.getMap.get(newData.id).category = newData.category;
             this.getters.getMap.get(newData.id).date = newData.date;

@@ -102,8 +102,10 @@
                     }, initialValue);
                     // console.log(`Cумма ${el} равна ${summ}`)
                     // console.log(summ)
-                    dataForChart.labels.push(el);
-                    dataForChart.datasets[0].data.push(summ);
+                    if (summ > 0) {
+                        dataForChart.labels.push(el);
+                        dataForChart.datasets[0].data.push(summ);
+                    }
                 });
 
                 return dataForChart;

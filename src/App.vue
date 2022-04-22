@@ -16,7 +16,7 @@
 </template>
 
 <script>
-
+//window.addEventListener('focusin', event => console.log(new Date, event.target));
     export default {
         name: 'App',
 

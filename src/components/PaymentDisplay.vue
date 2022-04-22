@@ -63,11 +63,13 @@
                                                 cols="12"
                                                 sm="6"
                                                 md="4"
+                                                @click="setCategory('category')"
                                         >
                                             <v-select
                                                     v-model="editedItem.category"
                                                     :items="categoryList"
                                                     label="Категория"
+                                                    :disabled="isEnabledNewCategoryInput"
                                             ></v-select>
                                         </v-col>
                                         <v-col
@@ -80,6 +82,30 @@
                                                     label="Стоимость"
                                             ></v-text-field>
                                         </v-col>
+                                        <v-col
+                                                cols="12"
+                                                sm="6"
+                                                md="4"
+                                                @click="setCategory('newCategory')"
+                                        >
+                                            <v-text-field
+                                                    v-model="newCategory"
+                                                    label="Новая категория"
+                                                    :disabled="!isEnabledNewCategoryInput"
+                                            ></v-text-field>
+                                        </v-col>
+                                        <!--                                        <v-col>-->
+                                        <!--                                            <v-checkbox-->
+                                        <!--                                                    v-model="isEnabledNewCategoryInput"-->
+                                        <!--                                                    :label="`Создать новую категорию`"-->
+                                        <!--                                            ></v-checkbox>-->
+                                        <!--                                        </v-col>-->
+                                        <!--                                        <v-btn-->
+                                        <!--                                                cols="12"-->
+                                        <!--                                                sm="6"-->
+                                        <!--                                                md="12"-->
+                                        <!--                                        >Clear-->
+                                        <!--                                        </v-btn>-->
                                     </v-row>
                                 </v-container>
                             </v-card-text>
@@ -218,10 +244,13 @@
             },
             page: {
                 type: Number,
-                default: () => {}
+                default: () => {
+                }
             }
         },
         data: () => ({
+            isEnabledNewCategoryInput: false,
+            newCategory: '',
             pageToTable: '',
             dialog: false,
             dialogDelete: false,
@@ -289,7 +318,7 @@
             //this.initialize();
         },
         updated() {
-           this.$emit('pageFromTable', this.pageToTable)
+            this.$emit('pageFromTable', this.pageToTable)
         },
 
         methods: {
@@ -367,7 +396,19 @@
                     },
                 ]
             },
-
+            // onfocus() {
+            //     this.wwe = true
+            // },
+            setCategory(currentInput) {
+                console.log(event.target.querySelector('#input-65'))
+                event.target.querySelector('#input-65').focus()
+                if (currentInput == 'newCategory') {
+                    this.isEnabledNewCategoryInput = true
+                } else {
+                    this.isEnabledNewCategoryInput = false
+                }
+                //this.isEnabledNewCategoryInput = !this.isEnabledNewCategoryInput
+            },
             editItem(item) {
                 this.editedIndex = this.list.indexOf(item)
                 this.editedItem = Object.assign({}, item)
@@ -410,12 +451,16 @@
                     this.close()
                 } else {
                     //this.desserts.push(this.editedItem)
-                    if (this.editedItem.value && this.editedItem.category) {
+                    if (this.editedItem.value && (this.editedItem.category || this.newCategory)) {
                         let newObj = Object.assign(this.editedItem, {
                             id: this.$store.getters.getLastPaymentId + 1,
                             date: this.editedItem.date || this.getCurrentDate
                         });
-                        console.log(newObj)
+                        if (this.isEnabledNewCategoryInput) {
+                            newObj.category = this.newCategory;
+                        }
+                        this.$store.commit('addAdditionCategory', this.newCategory);
+                        //console.log(newObj)
                         this.$store.commit('addAdditionPayment', newObj)
                         this.close()
                     }
