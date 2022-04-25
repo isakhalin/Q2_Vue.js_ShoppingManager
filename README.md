@@ -1,4 +1,4 @@
-# homework03
+# first-project
 
 ## Project setup
 ```
