@@ -400,8 +400,8 @@
             //     this.wwe = true
             // },
             setCategory(currentInput) {
-                console.log(event.target.querySelector('#input-65'))
-                event.target.querySelector('#input-65').focus()
+                // console.log(event.target.querySelector('#input-65'))
+                // event.target.querySelector('#input-65').focus()
                 if (currentInput == 'newCategory') {
                     this.isEnabledNewCategoryInput = true
                 } else {
